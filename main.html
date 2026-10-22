@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0B3D91">
+  <title>Antelope Valley College</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<!--
+  =======================================================================
+  index.html  —  Antelope Valley College app (HTML + CSS only, no JavaScript)
+  =======================================================================
+
+  FILES
+    index.html  (this file)  the content: every screen, every word
+    styles.css               the look: colors, spacing, layout
+  Keep both in the same folder and open index.html in a browser.
+
+  THE BIG IDEA (read once, then everything else is easy)
+    This page contains 8 "screens" (Home, Schedule, Events, News, More,
+    Map, Directory, Resources) but only one is visible at a time.
+    There is no JavaScript, so we use HTML radio buttons to remember
+    which screen is showing:
+
+      <input type="radio" name="screen" id="screen-events">   <- hidden memory
+      <label for="screen-events">Events</label>               <- the button
+
+    Clicking the <label> checks the radio, and styles.css shows the
+    matching screen. Section 4 of styles.css explains the CSS side.
+
+  FILE MAP (search for the "SCREEN:" markers below)
+    0. Icon sprite           the icons, drawn once, reused everywhere
+    1. Hidden screen radios  must stay ABOVE <div class="app">
+    2. SCREEN: Home
+    3. SCREEN: Schedule
+    4. SCREEN: Events
+    5. SCREEN: News
+    6. SCREEN: More
+    7. SCREEN: Campus Map
+    8. SCREEN: Staff Directory
+    9. SCREEN: Resources
+   10. Bottom navigation
+
+  WHAT TO EAntelope Valley College name ......... search "Antelope Valley College" and replace all
+    - Colors .............. top of styles.css (section 1)
+    - Bell schedule ....... SCREEN: Schedule
+    - Events / news ....... SCREEN: Events / SCREEN: News (copy a block,
+                            change the text)
+    - Staff ............... SCREEN: Staff Directory
+    - Phone / email ....... SCREEN: More
+    - Links ............... SCREEN: Resources (change href="...")
+
+  WHAT THIS VERSION CANNOT DO (needs JavaScript or a backend later)
+    - "Next up" card is a fixed example, it does not follow the real clock
+    - No search box, no real notifications, toggles don't remember state
+    - Events/news are typed in by hand, not loaded from a database
+  =======================================================================
+-->
+
+<body>
+
+  <!-- ===================================================================
+       0. ICON SPRITE
+       Each <symbol> is one icon drawn once. Anywhere in the page we
+       show it with:   <svg class="icon"><use href="#i-home"/></svg>
+       =================================================================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-calendar-x" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M10 13.5l4 4M14 13.5l-4 4"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.5c2 .7 3.5 2.4 3.5 5.5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6a2 2 0 012 2v14a2 2 0 00-2-2H4zM20 4h-6a2 2 0 00-2 2v14a2 2 0 012-2h6z"/></symbol>
+    <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M7 3v8M4 3v5a3 3 0 006 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H4c0 3 1.5 4.5 4 5M16 6h4c0 3-1.5 4.5-4 5M12 13v4M8 21h8M10 17h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.9-8-11a4.5 4.5 0 018-2.7A4.5 4.5 0 0120 9c0 6.1-8 11-8 11z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  </svg>
+
+
+  <!-- ===================================================================
+       1. HIDDEN SCREEN RADIOS
+       One radio per screen, all sharing name="screen" so only one can be
+       checked. The one with `checked` is the screen shown at startup.
+       THESE MUST STAY ABOVE <div class="app">  (CSS looks "downward").
+       =================================================================== -->
+  <input class="state-radio" type="radio" name="screen" id="screen-home" aria-label="Home" checked>
+  <input class="state-radio" type="radio" name="screen" id="screen-schedule" aria-label="Schedule">
+  <input class="state-radio" type="radio" name="screen" id="screen-events" aria-label="Events">
+  <input class="state-radio" type="radio" name="screen" id="screen-news" aria-label="News">
+  <input class="state-radio" type="radio" name="screen" id="screen-more" aria-label="More">
+  <input class="state-radio" type="radio" name="screen" id="screen-map" aria-label="Campus map">
+  <input class="state-radio" type="radio" name="screen" id="screen-directory" aria-label="Staff directory">
+  <input class="state-radio" type="radio" name="screen" id="screen-resources" aria-label="Resources">
+
+
+  <div class="app">
+    <div class="screens">
+
+
+      <!-- ===============================================================
+           2. SCREEN: HOME
+           =============================================================== -->
+      <section class="screen" id="home" aria-label="Home">
+
+        <!-- Blue header with logo, greeting and tagline -->
+        <header class="hero">
+          <div class="hero-brand">
+            <div class="logo-mark" aria-hidden="true">W</div>
+            <div>
+              <p class="hero-school">Antelope Valley College</p>
+              <p class="hero-sub">Home of the Eagles</p>
+            </div>
+          </div>
+          <h1 class="hero-greeting">Welcome back 👋</h1>
+          <p class="hero-tagline">Soar higher.</p>
+        </header>
+
+        <div class="screen-body">
+
+          <!-- "Next up" card.
+               EXAMPLE ONLY: this is typed in by hand. Showing the real
+               current class needs JavaScript (a later step).
+               The inline style="width: 55%" controls the progress bar. -->
+          <div class="section-head">
+            <h2 class="section-title">Next up</h2>
+          </div>
+          <article class="card now-card">
+            <div class="now-top">
+              <div class="icon-circle"><svg class="icon"><use href="#i-clock"/></svg></div>
+              <div>
+                <h3>Biology</h3>
+                <p>Lab 3 · Dr. Okafor · until 10:40 AM</p>
+              </div>
+            </div>
+            <div class="progress" aria-hidden="true"><span style="width: 55%"></span></div>
+          </article>
+
+          <!-- Quick links: each <label for="screen-..."> opens that screen -->
+          <div class="section-head">
+            <h2 class="section-title">Quick links</h2>
+          </div>
+          <div class="quick-grid">
+            <label class="card quick" for="screen-schedule">
+              <span class="icon-circle"><svg class="icon"><use href="#i-clock"/></svg></span>Schedule
+            </label>
+            <label class="card quick" for="screen-events">
+              <span class="icon-circle"><svg class="icon"><use href="#i-calendar"/></svg></span>Events
+            </label>
+            <label class="card quick" for="screen-news">
+              <span class="icon-circle"><svg class="icon"><use href="#i-news"/></svg></span>News
+            </label>
+            <label class="card quick" for="screen-map">
+              <span class="icon-circle"><svg class="icon"><use href="#i-map"/></svg></span>Campus Map
+            </label>
+            <label class="card quick" for="screen-directory">
+              <span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span>Directory
+            </label>
+            <label class="card quick" for="screen-resources">
+              <span class="icon-circle"><svg class="icon"><use href="#i-link"/></svg></span>Resources
+            </label>
+          </div>
+
+          <!-- Upcoming events preview (tapping a row opens the Events screen) -->
+          <div class="section-head">
+            <h2 class="section-title">Upcoming events</h2>
+            <label class="see-all" for="screen-events">See all</label>
+          </div>
+          <div class="stack">
+            <label class="card row-card" for="screen-events">
+              <div class="date-badge"><span>OCT</span><strong>16</strong></div>
+              <div class="grow">
+                <h3>Varsity Football vs. Central Hawks</h3>
+                <p>7:00 PM · Eagle Stadium</p>
+              </div>
+              <svg class="icon chev"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="card row-card" for="screen-events">
+              <div class="date-badge"><span>OCT</span><strong>19</strong></div>
+              <div class="grow">
+                <h3>Club Fair</h3>
+                <p>12:30 PM · Main Quad</p>
+              </div>
+              <svg class="icon chev"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="card row-card" for="screen-events">
+              <div class="date-badge"><span>OCT</span><strong>21</strong></div>
+              <div class="grow">
+                <h3>Fall Drama Production</h3>
+                <p>6:30 PM · Auditorium</p>
+              </div>
+              <svg class="icon chev"><use href="#i-chevron"/></svg>
+            </label>
+          </div>
+
+          <!-- Latest news preview (tapping opens the News screen) -->
+          <div class="section-head">
+            <h2 class="section-title">Latest news</h2>
+            <label class="see-all" for="screen-news">See all</label>
+          </div>
+          <div class="stack">
+            <label class="card news-teaser" for="screen-news">
+              <span class="tag" data-cat="announcement">Announcement</span>
+              <h3>Homecoming Spirit Week Schedule Released</h3>
+              <p>Five days of themes, one big pep rally. See what to wear.</p>
+            </label>
+            <label class="card news-teaser" for="screen-news">
+              <span class="tag" data-cat="clubs">Clubs</span>
+              <h3>Robotics Team Advances to Regionals</h3>
+              <p>The Eagles Robotics squad earned a top-three finish.</p>
+            </label>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           3. SCREEN: SCHEDULE
+           Two tabs ("Regular day" and "Wednesday"), built with the same
+           radio trick. Order matters: radios + labels first, then panels.
+           To change a class, edit its <h3> and <p>.
+           To mark the class happening "now", add class="is-now" to its
+           <article> and include the <span class="now-pill"> (see Period 3).
+           =============================================================== -->
+      <section class="screen" id="schedule" aria-label="Schedule">
+        <header class="app-bar"><h1>My Schedule</h1></header>
+
+        <div class="screen-body">
+          <div class="chip-group">
+
+            <input class="chip-radio" type="radio" name="day" id="day-regular" checked>
+            <label class="chip" for="day-regular">Regular day</label>
+
+            <input class="chip-radio" type="radio" name="day" id="day-wed">
+            <label class="chip" for="day-wed">Wed (late start)</label>
+
+            <!-- ---------- Regular day (Mon, Tue, Thu, Fri) ---------- -->
+            <div class="day-panel day-regular">
+
+              <article class="card period">
+                <div class="period-time"><strong>8:00 AM</strong><span>8:50 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>English 10</h3><p>Period 1 · Room 204 · Ms. Alvarez</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>8:55 AM</strong><span>9:45 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Geometry</h3><p>Period 2 · Room 118 · Mr. Chen</p></div>
+              </article>
+
+              <!-- Example of the "happening now" style -->
+              <article class="card period is-now">
+                <div class="period-time"><strong>9:50 AM</strong><span>10:40 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Biology</h3><p>Period 3 · Lab 3 · Dr. Okafor</p></div>
+                <span class="now-pill">NOW</span>
+              </article>
+
+              <article class="card period period-break">
+                <div class="period-time"><strong>10:40 AM</strong><span>10:55 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Nutrition Break</h3></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>11:00 AM</strong><span>11:50 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>World History</h3><p>Period 4 · Room 210 · Mr. Reyes</p></div>
+              </article>
+
+              <article class="card period period-break">
+                <div class="period-time"><strong>11:50 AM</strong><span>12:30 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Lunch</h3></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>12:35 PM</strong><span>1:25 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Spanish II</h3><p>Period 5 · Room 301 · Sra. Torres</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>1:30 PM</strong><span>2:20 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Physical Education</h3><p>Period 6 · Gym · Coach Miller</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>2:25 PM</strong><span>3:15 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Computer Science</h3><p>Period 7 · Room 122 · Ms. Patel</p></div>
+              </article>
+            </div>
+
+            <!-- ---------- Wednesday (late start, no nutrition break) ---------- -->
+            <div class="day-panel day-wed">
+
+              <article class="card period">
+                <div class="period-time"><strong>9:30 AM</strong><span>10:10 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>English 10</h3><p>Period 1 · Room 204 · Ms. Alvarez</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>10:15 AM</strong><span>10:55 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Geometry</h3><p>Period 2 · Room 118 · Mr. Chen</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>11:00 AM</strong><span>11:40 AM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Biology</h3><p>Period 3 · Lab 3 · Dr. Okafor</p></div>
+              </article>
+
+              <article class="card period period-break">
+                <div class="period-time"><strong>11:40 AM</strong><span>12:15 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Lunch</h3></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>12:20 PM</strong><span>1:00 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>World History</h3><p>Period 4 · Room 210 · Mr. Reyes</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>1:05 PM</strong><span>1:45 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Spanish II</h3><p>Period 5 · Room 301 · Sra. Torres</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>1:50 PM</strong><span>2:30 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Physical Education</h3><p>Period 6 · Gym · Coach Miller</p></div>
+              </article>
+
+              <article class="card period">
+                <div class="period-time"><strong>2:35 PM</strong><span>3:15 PM</span></div>
+                <div class="period-bar"></div>
+                <div class="period-info"><h3>Computer Science</h3><p>Period 7 · Room 122 · Ms. Patel</p></div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           4. SCREEN: EVENTS
+           Filter chips on top, expandable event cards below.
+
+           TO ADD AN EVENT: copy one <details class="card event"> block and
+           change: data-cat (sports / academics / clubs / arts / community),
+           the date badge, the tag text, title, time/place and description.
+           Keep data-cat lowercase and identical on the <details> and the
+           <span class="tag"> (the first filters, the second sets the color).
+
+           TO ADD A CATEGORY: add a chip pair below, a :not() line in
+           styles.css section 9, and a color line for .tag in section 5.
+           =============================================================== -->
+      <section class="screen" id="events" aria-label="Events">
+        <header class="app-bar"><h1>Events</h1></header>
+
+        <div class="screen-body">
+          <div class="chip-group">
+
+            <input class="chip-radio" type="radio" name="event-filter" id="f-all" checked>
+            <label class="chip" for="f-all">All</label>
+            <input class="chip-radio" type="radio" name="event-filter" id="f-sports">
+            <label class="chip" for="f-sports">Sports</label>
+            <input class="chip-radio" type="radio" name="event-filter" id="f-academics">
+            <label class="chip" for="f-academics">Academics</label>
+            <input class="chip-radio" type="radio" name="event-filter" id="f-clubs">
+            <label class="chip" for="f-clubs">Clubs</label>
+            <input class="chip-radio" type="radio" name="event-filter" id="f-arts">
+            <label class="chip" for="f-arts">Arts</label>
+            <input class="chip-radio" type="radio" name="event-filter" id="f-community">
+            <label class="chip" for="f-community">Community</label>
+
+            <div class="event-list">
+
+              <details class="card event" data-cat="sports">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>16</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="sports">Sports</span>
+                    <h3>Varsity Football vs. Central Hawks</h3>
+                    <p>7:00 PM · Eagle Stadium</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Friday night lights! Student section theme is "Blue Out". Gates open at 6:00 PM. Bring your student ID for free entry.</p>
+              </details>
+
+              <details class="card event" data-cat="clubs">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>19</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="clubs">Clubs</span>
+                    <h3>Club Fair</h3>
+                    <p>12:30 PM · Main Quad</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Meet every club on campus, sign up for interest lists and pick up flyers. Clubs: bring your table sign-in sheet.</p>
+              </details>
+
+              <details class="card event" data-cat="arts">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>21</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="arts">Arts</span>
+                    <h3>Fall Drama Production</h3>
+                    <p>6:30 PM · Auditorium</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">The drama department presents its fall show. Tickets are $5 for students and $8 for adults at the door.</p>
+              </details>
+
+              <details class="card event" data-cat="academics">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>23</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="academics">Academics</span>
+                    <h3>College Application Workshop</h3>
+                    <p>3:30 PM · Library</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Counselors will walk seniors through the application timeline, essays and fee waivers. Laptops encouraged.</p>
+              </details>
+
+              <details class="card event" data-cat="community">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>26</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="community">Community</span>
+                    <h3>Community Blood Drive</h3>
+                    <p>9:00 AM · Gym</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Students 16+ with parent permission can donate. Sign up with the ASB office. Snacks provided afterward.</p>
+              </details>
+
+              <details class="card event" data-cat="academics">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>29</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="academics">Academics</span>
+                    <h3>Parent-Teacher Conferences</h3>
+                    <p>4:00 PM · Main Building</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Conferences run in 10-minute blocks. Check in at the front office to receive your teacher room list.</p>
+              </details>
+
+              <details class="card event" data-cat="sports">
+                <summary>
+                  <div class="date-badge"><span>OCT</span><strong>30</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="sports">Sports</span>
+                    <h3>Girls Volleyball Senior Night</h3>
+                    <p>6:00 PM · Gym</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Come celebrate our senior players and their families before the match.</p>
+              </details>
+
+              <details class="card event" data-cat="community">
+                <summary>
+                  <div class="date-badge"><span>NOV</span><strong>6</strong></div>
+                  <div class="event-main">
+                    <span class="tag" data-cat="community">Community</span>
+                    <h3>Homecoming Dance</h3>
+                    <p>7:30 PM · Cafeteria</p>
+                  </div>
+                  <svg class="icon chev"><use href="#i-chevron"/></svg>
+                </summary>
+                <p class="event-desc">Semi-formal. Guest passes are available in the main office through the week before.</p>
+              </details>
+
+            </div><!-- /.event-list -->
+          </div><!-- /.chip-group -->
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           5. SCREEN: NEWS
+           Tap a story to open it (a built-in HTML <details> element).
+           TO ADD A STORY: copy one <details class="card news-card"> block.
+           Valid data-cat values for the tag: announcement, academics,
+           clubs, sports, arts, community.
+           =============================================================== -->
+      <section class="screen" id="news" aria-label="News">
+        <header class="app-bar"><h1>News</h1></header>
+
+        <div class="screen-body">
+          <div class="stack">
+
+            <details class="card news-card">
+              <summary>
+                <div class="news-meta">
+                  <span class="tag" data-cat="announcement">Announcement</span>
+                  <time datetime="2026-10-15">Oct 15</time>
+                </div>
+                <h3>Homecoming Spirit Week Schedule Released</h3>
+                <p class="summary-text">Five days of themes, one big pep rally. See what to wear.</p>
+              </summary>
+              <div class="news-body">
+                <p>Spirit Week kicks off Monday, Nov 2 with Pajama Day and ends Friday with the pep rally and game. Each grade is competing for the spirit trophy, with points awarded for participation, hallway decorations and the lunchtime games.</p>
+                <p>All dress-up days must follow the regular dress code. Questions can go to the ASB advisor in Room 150.</p>
+              </div>
+            </details>
+
+            <details class="card news-card">
+              <summary>
+                <div class="news-meta">
+                  <span class="tag" data-cat="clubs">Clubs</span>
+                  <time datetime="2026-10-14">Oct 14</time>
+                </div>
+                <h3>Robotics Team Advances to Regionals</h3>
+                <p class="summary-text">The Eagles Robotics squad earned a top-three finish.</p>
+              </summary>
+              <div class="news-body">
+                <p>After a strong weekend of qualifying matches, the robotics team secured a spot at the regional championship. The team thanks its mentors and the parents who helped with travel and build days.</p>
+                <p>New members are welcome. Meetings are Tuesdays and Thursdays after school in Room 122.</p>
+              </div>
+            </details>
+
+            <details class="card news-card">
+              <summary>
+                <div class="news-meta">
+                  <span class="tag" data-cat="academics">Academics</span>
+                  <time datetime="2026-10-13">Oct 13</time>
+                </div>
+                <h3>Library Antelope Valley College Hours</h3>
+                <p class="summary-text">Quiet study space now open until 5:00 PM on weekdays.</p>
+              </summary>
+              <div class="news-body">
+                <p>Starting this week, the library will stay open until 5:00 PM Monday through Thursday. Tutoring is available on Tuesdays and Wednesdays, and printing is free for students.</p>
+              </div>
+            </details>
+
+            <details class="card news-card">
+              <summary>
+                <div class="news-meta">
+                  <span class="tag" data-cat="sports">Sports</span>
+                  <time datetime="2026-10-12">Oct 12</time>
+                </div>
+                <h3>Cross Country Wins League Meet</h3>
+                <p class="summary-text">Both boys and girls teams took first place on Saturday.</p>
+              </summary>
+              <div class="news-body">
+                <p>The cross country program swept the league meet, with four runners finishing in the top ten. The team now prepares for the divisional race in two weeks.</p>
+              </div>
+            </details>
+
+            <details class="card news-card">
+              <summary>
+                <div class="news-meta">
+                  <span class="tag" data-cat="announcement">Announcement</span>
+                  <time datetime="2026-10-09">Oct 9</time>
+                </div>
+                <h3>Picture Retake Day Reminder</h3>
+                <p class="summary-text">Missed picture day? Retakes are next Thursday in the library.</p>
+              </summary>
+              <div class="news-body">
+                <p>Students who were absent or want a retake can come to the library during their PE or elective period with a pass. Bring your original proof if you want a replacement.</p>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           6. SCREEN: MORE
+           Links to the extra screens, notification toggles (visual only
+           for now), office contact info.
+           tel: and mailto: links open the phone dialer / email app.
+           =============================================================== -->
+      <section class="screen" id="more" aria-label="More">
+        <header class="app-bar"><h1>More</h1></header>
+
+        <div class="screen-body">
+
+          <div class="card list-group">
+            <label class="list-row" for="screen-map">
+              <span class="icon-circle"><svg class="icon"><use href="#i-map"/></svg></span>
+              <span class="row-text"><strong>Campus Map</strong></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="list-row" for="screen-directory">
+              <span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span>
+              <span class="row-text"><strong>Staff Directory</strong></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="list-row" for="screen-resources">
+              <span class="icon-circle"><svg class="icon"><use href="#i-link"/></svg></span>
+              <span class="row-text"><strong>Resources</strong></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+          </div>
+
+          <h2 class="group-label">Notifications</h2>
+          <div class="card list-group">
+            <label class="list-row">
+              <span class="row-text"><strong>Event reminders</strong><span>Get a heads-up before events</span></span>
+              <input class="switch" type="checkbox" checked>
+            </label>
+            <label class="list-row">
+              <span class="row-text"><strong>News alerts</strong><span>Important school announcements</span></span>
+              <input class="switch" type="checkbox" checked>
+            </label>
+          </div>
+
+          <h2 class="group-label">Contact the office</h2>
+          <div class="card list-group">
+            <div class="list-row">
+              <span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span>
+              <span class="row-textAntelope Valley College Street</strong><span>Your City, ST 00000</span></span>
+            </div>
+            <a class="list-row" href="tel:5551234567">
+              <span class="icon-circle"><svg class="icon"><use href="#i-phone"/></svg></span>
+              <span class="row-text"><strong>(555) 123-4567</strong><span>Main office</span></span>
+            </a>
+            <a class="list-row" href="tel:5551234568">
+              <span class="icon-circle"><svg class="icon"><use href="#i-calendar-x"/></svg></span>
+              <span class="row-text"><strong>(555) 123-4568</strong><span>Attendance line</span></span>
+            </a>
+            <a class="list-row" href="mailto:office@antelopevalleycollege.example.edu">
+              <span class="icon-circle"><svg class="icon"><use href="#i-mail"/></svg></span>
+              <span class="row-text"><strong>office@antelopevalleycollege.example.edu</strong><span>Email the office</span></span>
+            </a>
+            <a class="list-row" href="https://www.example.edu" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-globe"/></svg></span>
+              <span class="row-Antelope Valley College website</strong><span>www.example.edu</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+          </div>
+
+          <p class="app-footer">Antelope Valley College · v1.0.0</p>
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           7. SCREEN: CAMPUS MAP
+           Every building = 3 elements, always in this order:
+             1. <input class="b-radio" ... id="b-NAME">     (hidden memory)
+             2. <label class="tile" for="b-NAME" style="--x --y --w --h">
+             3. <div class="tile-info">...</div>           (description)
+           The inline style positions the box as % of the map:
+             --x = distance from left,  --y = distance from top,
+             --w = width,               --h = height.
+           Add class "tile-field" (green) or "tile-parking" (gray) for
+           non-buildings. Check boxes don't overlap, then you're done.
+           =============================================================== -->
+      <section class="screen" id="map" aria-label="Campus map">
+        <header class="app-bar">
+          <label class="back-btn" for="screen-more" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label>
+          <h1>Campus Map</h1>
+        </header>
+
+        <div class="screen-body">
+          <div class="map">
+
+            <input class="b-radio" type="radio" name="building" id="b-main">
+            <label class="tile" for="b-main" style="--x:6%; --y:6%; --w:36%; --h:20%">Main Building</label>
+            <div class="tile-info"><strong>Main Building</strong><span>Classrooms 101–220, counseling offices and the front office.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-admin">
+            <label class="tile" for="b-admin" style="--x:6%; --y:30%; --w:22%; --h:12%">Attendance &amp; Admin</label>
+            <div class="tile-info"><strong>Attendance &amp; Admin</strong><span>Attendance desk, principal and visitor check-in.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-library">
+            <label class="tile" for="b-library" style="--x:48%; --y:6%; --w:22%; --h:16%">Library</label>
+            <div class="tile-info"><strong>Library</strong><span>Study space, printing and tutoring. Open until 5:00 PM.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-science">
+            <label class="tile" for="b-science" style="--x:76%; --y:6%; --w:18%; --h:34%">Science Wing</label>
+            <div class="tile-info"><strong>Science Wing</strong><span>Biology, chemistry and physics labs.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-cafeteria">
+            <label class="tile" for="b-cafeteria" style="--x:36%; --y:34%; --w:30%; --h:14%">Cafeteria</label>
+            <div class="tile-info"><strong>Cafeteria</strong><span>Breakfast, nutrition break and lunch service.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-gym">
+            <label class="tile" for="b-gym" style="--x:6%; --y:56%; --w:30%; --h:22%">Gymnasium</label>
+            <div class="tile-info"><strong>Gymnasium</strong><span>PE classes, volleyball, basketball and assemblies.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-auditorium">
+            <label class="tile" for="b-auditorium" style="--x:42%; --y:56%; --w:22%; --h:22%">Auditorium</label>
+            <div class="tile-info"><strong>Auditorium</strong><span>Drama, band and choir performances.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-field">
+            <label class="tile tile-field" for="b-field" style="--x:70%; --y:48%; --w:24%; --h:38%">Eagle Stadium</label>
+            <div class="tile-info"><strong>Eagle Stadium</strong><span>Football, soccer and track events.</span></div>
+
+            <input class="b-radio" type="radio" name="building" id="b-parking">
+            <label class="tile tile-parking" for="b-parking" style="--x:6%; --y:84%; --w:58%; --h:12%">Student Parking</label>
+            <div class="tile-info"><strong>Student Parking</strong><span>Permit parking only. Visitor parking is at the front.</span></div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           8. SCREEN: STAFF DIRECTORY
+           Grouped by department. TO ADD A PERSON: copy one
+           <li class="list-row"> inside the right department's <ul>.
+           The envelope button opens the user's email app (mailto:).
+           (A search box needs JavaScript, so it is left for later.)
+           =============================================================== -->
+      <section class="screen" id="directory" aria-label="Staff directory">
+        <header class="app-bar">
+          <label class="back-btn" for="screen-more" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label>
+          <h1>Staff Directory</h1>
+        </header>
+
+        <div class="screen-body">
+
+          <h2 class="group-label">Administration</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">DW</span>
+              <span class="row-text"><strong>Dana Whitfield</strong><span>Principal · Main Office</span></span>
+              <a class="row-action" href="mailto:dwhitfield@antelopevalleycollege.example.edu" aria-label="Email Dana Whitfield"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+            <li class="list-row">
+              <span class="avatar">LO</span>
+              <span class="row-text"><strong>Luis Ortega</strong><span>Assistant Principal · Main Office</span></span>
+              <a class="row-action" href="mailto:lortega@antelopevalleycollege.example.edu" aria-label="Email Luis Ortega"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+            <li class="list-row">
+              <span class="avatar">KM</span>
+              <span class="row-text"><strong>Karen Mills</strong><span>Attendance Clerk · Front Desk</span></span>
+              <a class="row-action" href="mailto:kmills@antelopevalleycollege.example.edu" aria-label="Email Karen Mills"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Athletics</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">JM</span>
+              <span class="row-text"><strong>Jordan Miller</strong><span>PE Teacher &amp; Head Coach · Gym</span></span>
+              <a class="row-action" href="mailto:jmiller@antelopevalleycollege.example.edu" aria-label="Email Jordan Miller"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Career &amp; Technical</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">AP</span>
+              <span class="row-text"><strong>Anita Patel</strong><span>Computer Science Teacher · Room 122</span></span>
+              <a class="row-action" href="mailto:apatel@antelopevalleycollege.example.edu" aria-label="Email Anita Patel"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Counseling</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">PN</span>
+              <span class="row-text"><strong>Priya Nair</strong><span>Counselor (A–L) · Room 105</span></span>
+              <a class="row-action" href="mailto:pnair@antelopevalleycollege.example.edu" aria-label="Email Priya Nair"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+            <li class="list-row">
+              <span class="avatar">MB</span>
+              <span class="row-text"><strong>Marcus Bell</strong><span>Counselor (M–Z) · Room 106</span></span>
+              <a class="row-action" href="mailto:mbell@antelopevalleycollege.example.edu" aria-label="Email Marcus Bell"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">English</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">MA</span>
+              <span class="row-text"><strong>Maria Alvarez</strong><span>English Teacher · Room 204</span></span>
+              <a class="row-action" href="mailto:malvarez@antelopevalleycollege.example.edu" aria-label="Email Maria Alvarez"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Library</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">RD</span>
+              <span class="row-text"><strong>Rosa Delgado</strong><span>Librarian · Library</span></span>
+              <a class="row-action" href="mailto:rdelgado@antelopevalleycollege.example.edu" aria-label="Email Rosa Delgado"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Math</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">WC</span>
+              <span class="row-text"><strong>Wei Chen</strong><span>Math Teacher · Room 118</span></span>
+              <a class="row-action" href="mailto:wchen@antelopevalleycollege.example.edu" aria-label="Email Wei Chen"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Science</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">AO</span>
+              <span class="row-text"><strong>Ada Okafor</strong><span>Biology Teacher · Lab 3</span></span>
+              <a class="row-action" href="mailto:aokafor@antelopevalleycollege.example.edu" aria-label="Email Ada Okafor"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">Social Studies</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">SR</span>
+              <span class="row-text"><strong>Sam Reyes</strong><span>History Teacher · Room 210</span></span>
+              <a class="row-action" href="mailto:sreyes@antelopevalleycollege.example.edu" aria-label="Email Sam Reyes"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+          <h2 class="group-label">World Languages</h2>
+          <ul class="card list-group">
+            <li class="list-row">
+              <span class="avatar">ET</span>
+              <span class="row-text"><strong>Elena Torres</strong><span>Spanish Teacher · Room 301</span></span>
+              <a class="row-action" href="mailto:etorres@antelopevalleycollege.example.edu" aria-label="Email Elena Torres"><svg class="icon"><use href="#i-mail"/></svg></a>
+            </li>
+          </ul>
+
+        </div>
+      </section>
+
+
+      <!-- ===============================================================
+           9. SCREEN: RESOURCES
+           Each row is a normal link. TO ADD ONE: copy an <a class="list-row">
+           block, change href="...", the icon (#i-... from the sprite at the
+           top), and the two lines of text.
+           =============================================================== -->
+      <section class="screen" id="resources" aria-label="Resources">
+        <header class="app-bar">
+          <label class="back-btn" for="screen-more" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label>
+          <h1>Resources</h1>
+        </header>
+
+        <div class="screen-body">
+
+          <h2 class="group-label">Academics</h2>
+          <div class="card list-group">
+            <a class="list-row" href="https://www.example.edu/portal" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-cap"/></svg></span>
+              <span class="row-text"><strong>Student Portal</strong><span>Grades, attendance and assignments</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/lms" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-book"/></svg></span>
+              <span class="row-text"><strong>Learning Management System</strong><span>Course pages and homework</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/tutoring" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span>
+              <span class="row-text"><strong>Tutoring Schedule</strong><span>Free peer tutoring in the library</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+          </div>
+
+          <h2 class="group-label">Campus Life</h2>
+          <div class="card list-group">
+            <a class="list-row" href="https://www.example.edu/menu" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-utensils"/></svg></span>
+              <span class="row-text"><strong>Lunch Menu</strong><span>This week's breakfast and lunch</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/clubs" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-star"/></svg></span>
+              <span class="row-text"><strong>Clubs &amp; Activities</strong><span>Find a club or start your own</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/athletics" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span>
+              <span class="row-text"><strong>Athletics</strong><span>Schedules, rosters and physical forms</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+          </div>
+
+          <h2 class="group-label">Support</h2>
+          <div class="card list-group">
+            <a class="list-row" href="https://www.example.edu/counseling" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-heart"/></svg></span>
+              <span class="row-text"><strong>Counseling Appointments</strong><span>Book time with your counselor</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/absence" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-calendar-x"/></svg></span>
+              <span class="row-text"><strong>Report an Absence</strong><span>For parents and guardians</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+            <a class="list-row" href="https://www.example.edu/handbook" target="_blank" rel="noopener">
+              <span class="icon-circle"><svg class="icon"><use href="#i-file"/></svg></span>
+              <span class="row-text"><strong>Student Handbook</strong><span>Policies, dress code and bell schedule</span></span>
+              <svg class="icon row-end"><use href="#i-external"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /.screens -->
+
+
+    <!-- ===================================================================
+         10. BOTTOM NAVIGATION
+         Five tabs. Each <label> opens a screen. The class on each
+         (nav-home, nav-events...) is how styles.css highlights the
+         active tab, so keep those class names.
+         =================================================================== -->
+    <nav class="bottom-nav" aria-label="Main">
+      <label class="nav-item nav-home" for="screen-home">
+        <svg class="icon"><use href="#i-home"/></svg><span>Home</span>
+      </label>
+      <label class="nav-item nav-schedule" for="screen-schedule">
+        <svg class="icon"><use href="#i-clock"/></svg><span>Schedule</span>
+      </label>
+      <label class="nav-item nav-events" for="screen-events">
+        <svg class="icon"><use href="#i-calendar"/></svg><span>Events</span>
+      </label>
+      <label class="nav-item nav-news" for="screen-news">
+        <svg class="icon"><use href="#i-news"/></svg><span>News</span>
+      </label>
+      <label class="nav-item nav-more" for="screen-more">
+        <svg class="icon"><use href="#i-grid"/></svg><span>More</span>
+      </label>
+    </nav>
+
+  </div><!-- /.app -->
+
+</body>
+</html>

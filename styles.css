@@ -1,0 +1,829 @@
+/* =====================================================================
+   styles.css  —  Westview High School app (HTML + CSS only, no JavaScript)
+   Colors and fonts follow the district brand guide (PMS 208 maroon,
+   black, silver + complementary tan / sky / lime; Times New Roman body,
+   Helvetica Neue / Arial headlines).
+
+   HOW THIS FILE IS ORGANIZED (search for the numbers to jump around)
+     1.  Design tokens ........ official palette + colors, radius, fonts
+     2.  Reset / base ......... includes the serif/sans font rule
+     3.  App shell ............ the phone-shaped frame + scrolling area
+     4.  Screen switching ..... the "radio button trick" (read this one!)
+     5.  Shared pieces ........ cards, tags, date badges, icons, lists
+     6.  Bottom navigation
+     7.  Home screen
+     8.  Schedule screen
+     9.  Events screen ........ filter chips + expandable cards
+    10.  News screen
+    11.  Campus map screen
+    12.  Directory + Resources + More screens
+    13.  Desktop preview frame
+
+   QUICK EDITS
+     - Colors ................ section 1. The six --pal-* values are the
+                               official brand colors; everything else
+                               in the app is built from them.
+     - Fonts ................. --font-body and --font-head in section 1
+     - Dark mode colors ...... the @media (prefers-color-scheme: dark)
+                               block in section 1
+     - Add a new screen ...... see the comment in section 4
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. DESIGN TOKENS
+   Every color/size used below comes from these variables, so changing
+   a value here changes it everywhere in the app.
+   ===================================================================== */
+:root {
+
+  /* ---------- OFFICIAL BRAND PALETTE (from the brand guide) ----------
+     Use these exact values. Do not lighten, darken or recolor them. */
+  --pal-maroon: #8C1E41;   /* Pantone (PMS) 208   RGB 140-30-65    */
+  --pal-black:  #000000;   /* Pantone (PMS) 208 Black              */
+  --pal-silver: #D1D3D4;   /* Gray / Silver       RGB 209-211-212  */
+  --pal-tan:    #C2B8A3;   /* complementary       RGB 194-184-163  */
+  --pal-sky:    #A2BBDE;   /* complementary       RGB 162-187-222  */
+  --pal-lime:   #C6D083;   /* complementary       RGB 198-208-131  */
+
+  /* ---------- Semantic colors (what the app actually uses) ---------- */
+  --brand:        var(--pal-maroon);   /* header, tiles, main color         */
+  --brand-strong: var(--pal-maroon);   /* active chips, progress, switches  */
+  --brand-text:   var(--pal-maroon);   /* maroon text on a plain background */
+  --brand-soft:   color-mix(in srgb, var(--pal-tan) 24%, white); /* pale tint: icon circles, date badges */
+  --on-brand-soft:var(--pal-maroon);   /* text/icons sitting on --brand-soft */
+  --progress-fill:var(--pal-maroon);   /* "Next up" progress bar            */
+  --accent:       var(--pal-tan);      /* logo square, selected map tile    */
+  --on-accent:    var(--pal-black);    /* text on top of --accent           */
+
+  /* Neutrals (built from the official silver + black) */
+  --bg:           color-mix(in srgb, var(--pal-silver) 22%, white);  /* page background */
+  --surface:      #FFFFFF;                                           /* cards           */
+  --surface-2:    color-mix(in srgb, var(--pal-silver) 45%, white);  /* quieter surface */
+  --border:       var(--pal-silver);
+  --text:         var(--pal-black);
+  --text-muted:   color-mix(in srgb, var(--pal-black) 68%, white);   /* secondary text  */
+  --switch-off:   color-mix(in srgb, var(--pal-silver) 80%, black);  /* toggle, off     */
+
+  /* Campus map colors */
+  --map-ground:   color-mix(in srgb, var(--pal-sky) 30%, white);     /* map background  */
+  --map-field:    var(--pal-lime);                                   /* stadium         */
+  --map-parking:  var(--pal-silver);                                 /* parking lot     */
+
+  /* Shape + type
+     Brand rule: Times New Roman for body copy, Helvetica Neue / Arial for
+     headlines. No more than two typefaces. */
+  --radius:       16px;
+  --font-body: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
+  --font-head: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+}
+
+/* Dark mode: same variable names, different values.
+   The browser switches automatically based on the phone/computer setting.
+   Maroon is too dark to read on a dark background, so in dark mode the
+   "text" and "strong" roles use a lighter maroon and the text accents use
+   the official tan. Delete this whole block to turn dark mode off. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-strong: #B33A62;                       /* lifted maroon, white text still passes */
+    --brand-text:   var(--pal-tan);
+    --brand-soft:   color-mix(in srgb, var(--pal-maroon) 32%, #161617);
+    --on-brand-soft:var(--pal-tan);
+    --progress-fill:var(--pal-tan);
+
+    --bg:           #0A0A0B;
+    --surface:      #161617;
+    --surface-2:    #212123;
+    --border:       #333336;
+    --text:         #F2F2F2;
+    --text-muted:   #A8AAAC;
+    --switch-off:   #4A4A4E;
+
+    --map-ground:   color-mix(in srgb, var(--pal-sky) 14%, #0A0A0B);
+  }
+}
+
+
+/* =====================================================================
+   2. RESET / BASE
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);   /* serif: all body copy */
+  font-size: 17px;                 /* Times runs small, so a little larger than usual */
+  line-height: 1.4;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Headline / attention font (sans-serif).
+   Anything NOT listed here is body copy and stays serif.
+   To make another element a "headline", add its selector to this list. */
+h1, h2, h3, strong,
+.tag, .chip, .now-pill, .see-all, .group-label,
+.nav-item, .quick, .tile, .date-badge span,
+.hero-school, .logo-mark {
+  font-family: var(--font-head);
+}
+
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+label { cursor: pointer; }
+button, input { font: inherit; }
+
+/* Hidden-but-still-keyboard-focusable inputs.
+   The whole app is driven by radio buttons / checkboxes that the user
+   never sees (they click <label>s instead). See section 4. */
+.state-radio,
+.chip-radio,
+.b-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* =====================================================================
+   3. APP SHELL
+   .app is the "phone". Inside it: .screens (the area that shows ONE
+   screen at a time) and .bottom-nav (the tab bar).
+   ===================================================================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;            /* fallback for old browsers */
+  height: 100dvh;           /* correct height on phones with moving toolbars */
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.screens {
+  position: relative;       /* each .screen is positioned inside this box */
+  flex: 1;
+  min-height: 0;            /* lets the flex child shrink so it can scroll */
+}
+
+
+/* =====================================================================
+   4. SCREEN SWITCHING  (the radio button trick)
+
+   There is no JavaScript, so how does tapping a tab change the screen?
+
+     1. At the top of <body> there are 8 hidden radio buttons that all
+        share name="screen". Only ONE radio in a group can be checked.
+     2. Tab buttons are <label for="screen-xyz"> elements. Clicking a
+        label checks its radio.
+     3. CSS reads which radio is checked and shows the matching screen:
+
+          #screen-events:checked ~ .app #events { display: block }
+
+        Read it as: "when the radio #screen-events is checked, find
+        .app after it, then the element with id=events inside, and
+        display it."  The ~ means "a later sibling".
+
+   RULES THAT MAKE IT WORK
+     - The radios must come BEFORE <div class="app"> in the HTML.
+     - Every screen is hidden by default (display: none below).
+
+   TO ADD A NEW SCREEN
+     a) HTML: add <input ... name="screen" id="screen-NAME"> with the others
+     b) HTML: add <section class="screen" id="NAME"> ... </section>
+     c) CSS : add  #screen-NAME:checked ~ .app #NAME,  to the list below
+     d) HTML: add a <label for="screen-NAME"> anywhere to open it
+   ===================================================================== */
+.screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;         /* each screen scrolls on its own */
+  overscroll-behavior: contain;
+}
+
+#screen-home:checked      ~ .app #home,
+#screen-schedule:checked  ~ .app #schedule,
+#screen-events:checked    ~ .app #events,
+#screen-news:checked      ~ .app #news,
+#screen-more:checked      ~ .app #more,
+#screen-map:checked       ~ .app #map,
+#screen-directory:checked ~ .app #directory,
+#screen-resources:checked ~ .app #resources {
+  display: block;
+}
+
+/* Keyboard users: when any hidden radio has focus, outline the tab bar. */
+.state-radio:focus-visible ~ .app .bottom-nav {
+  outline: 3px solid var(--brand-strong);
+  outline-offset: -3px;
+}
+
+
+/* =====================================================================
+   5. SHARED PIECES
+   ===================================================================== */
+
+/* ---- Icons: every <svg class="icon"> draws a symbol from the sprite
+        at the top of index.html. They take the text color. ---- */
+.icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- Screen layout ---- */
+.screen-body { padding: 4px 20px 28px; }
+
+/* Top bar used on every screen except Home */
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px 12px;
+  background: var(--bg);
+}
+.app-bar h1 { font-size: 22px; font-weight: 800; }
+
+.back-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-left: -10px;
+  border-radius: 50%;
+}
+.back-btn:hover { background: var(--surface-2); }
+.back-btn .icon { transform: rotate(180deg); }   /* chevron points left */
+
+/* Section titles ("Upcoming events", "Latest news") */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 26px 0 10px;
+}
+.section-title { font-size: 17px; font-weight: 800; }
+.see-all { font-size: 14px; font-weight: 700; color: var(--brand-text); }
+
+/* ---- Card: the white rounded box used everywhere ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* A vertical stack of cards with space between them */
+.stack { display: grid; gap: 10px; }
+
+/* ---- Category tag ("Sports", "Clubs"...). The color comes from the
+        data-cat attribute, so adding a category = adding one line.
+        Every category uses one of the official brand colors as a tint
+        behind dark text, so it stays readable. ---- */
+.tag {
+  --tag: var(--pal-silver);
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid color-mix(in srgb, var(--tag) 70%, transparent);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  background: color-mix(in srgb, var(--tag) 40%, transparent);
+}
+.tag[data-cat="sports"]       { --tag: var(--pal-maroon); }
+.tag[data-cat="academics"]    { --tag: var(--pal-sky); }
+.tag[data-cat="clubs"]        { --tag: var(--pal-lime); }
+.tag[data-cat="arts"]         { --tag: var(--pal-tan); }
+.tag[data-cat="community"]    { --tag: var(--pal-silver); }
+.tag[data-cat="announcement"] { --tag: var(--pal-black); }
+
+/* Announcements use black, which looks heavy at 40%, so this tag gets a
+   much lighter fill and a softer outline. */
+.tag[data-cat="announcement"] {
+  background: color-mix(in srgb, var(--tag) 8%, transparent);
+  border-color: color-mix(in srgb, var(--tag) 35%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* black would vanish on a dark card, so announcements use silver */
+  .tag[data-cat="announcement"] { --tag: var(--pal-silver); }
+}
+
+/* ---- Date badge: the little calendar square ("OCT 16") ---- */
+.date-badge {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  width: 54px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: var(--brand-soft);
+  color: var(--on-brand-soft);
+}
+.date-badge span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.date-badge strong { font-size: 22px; font-weight: 800; line-height: 1.1; }
+
+/* ---- Round icon / initials circle ---- */
+.icon-circle,
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--on-brand-soft);
+}
+.avatar { font-family: var(--font-head); font-size: 14px; font-weight: 800; }
+
+/* ---- Rows inside a grouped list (Directory, Resources, More) ---- */
+.group-label {
+  margin: 22px 0 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+}
+.list-group { overflow: hidden; }
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.list-row + .list-row { border-top: 1px solid var(--border); }
+a.list-row:hover,
+label.list-row:hover { background: var(--surface-2); }
+
+.row-text { flex: 1; min-width: 0; }
+.row-text strong { display: block; font-size: 15px; font-weight: 700; }
+.row-text span   { display: block; font-size: 14px; color: var(--text-muted); }
+.row-end { color: var(--text-muted); }
+
+/* Little icon button on the right side of a row (email) */
+.row-action {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--brand-text);
+}
+.row-action:hover { background: var(--brand-soft); }
+
+/* ---- Expandable cards (<details>) ----
+   <details> is built into HTML: tapping the <summary> opens/closes it.
+   No CSS or JS is needed for that, we only restyle it here. */
+summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  list-style: none;          /* hide the default triangle (Firefox) */
+  cursor: pointer;
+}
+summary::-webkit-details-marker { display: none; }   /* hide triangle (Chrome/Safari) */
+
+.chev { margin-top: 2px; color: var(--text-muted); transition: transform 0.2s; }
+details[open] > summary .chev { transform: rotate(90deg); }
+
+
+/* =====================================================================
+   6. BOTTOM NAVIGATION
+   ===================================================================== */
+.bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 0 6px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Highlight the tab whose radio is checked.
+   Map / Directory / Resources live under "More", so they light up More. */
+#screen-home:checked      ~ .app .nav-home,
+#screen-schedule:checked  ~ .app .nav-schedule,
+#screen-events:checked    ~ .app .nav-events,
+#screen-news:checked      ~ .app .nav-news,
+#screen-more:checked      ~ .app .nav-more,
+#screen-map:checked       ~ .app .nav-more,
+#screen-directory:checked ~ .app .nav-more,
+#screen-resources:checked ~ .app .nav-more {
+  background: var(--brand-soft);
+  color: var(--on-brand-soft);
+}
+
+
+/* =====================================================================
+   7. HOME SCREEN
+   ===================================================================== */
+.hero {
+  padding: max(20px, env(safe-area-inset-top)) 20px 28px;
+  border-radius: 0 0 28px 28px;
+  color: #fff;
+  background: var(--brand);       /* solid maroon: brand colors are not to be shaded */
+}
+
+.hero-brand { display: flex; align-items: center; gap: 12px; }
+
+.logo-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
+.hero-school { font-size: 17px; font-weight: 800; }
+.hero-sub    { font-size: 14px; opacity: 0.85; }
+.hero-greeting { margin-top: 24px; font-size: 28px; font-weight: 800; }
+.hero-tagline  { margin-top: 4px; font-size: 16px; font-style: italic; opacity: 0.9; }
+
+/* "Next up" card */
+.now-card { padding: 16px; }
+.now-top  { display: flex; align-items: center; gap: 14px; }
+.now-top h3 { font-size: 17px; font-weight: 800; }
+.now-top p  { font-size: 15px; color: var(--text-muted); }
+
+.progress {
+  height: 6px;
+  margin-top: 14px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+/* The inline style="width: 55%" on the inner <span> sets how full it is */
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: var(--progress-fill);
+}
+
+/* Quick-link tiles: 3 per row */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.quick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+.quick:hover { background: var(--surface-2); }
+.quick .icon-circle { width: 44px; height: 44px; }
+
+/* Compact event / news rows shown on Home */
+.row-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+}
+.row-card:hover { background: var(--surface-2); }
+.row-card h3 { font-size: 15px; font-weight: 700; }
+.row-card p  { margin-top: 4px; font-size: 14px; color: var(--text-muted); }
+.row-card .grow { flex: 1; min-width: 0; }
+
+.news-teaser { display: block; padding: 16px; }
+.news-teaser:hover { background: var(--surface-2); }
+.news-teaser h3 { margin-top: 10px; font-size: 17px; font-weight: 800; line-height: 1.25; }
+.news-teaser p  { margin-top: 6px; color: var(--text-muted); }
+
+
+/* =====================================================================
+   8. SCHEDULE SCREEN
+   Two day-tabs. Same radio trick as section 4, but scoped to this box:
+   radio + label pairs, then the panels they show/hide.
+   ===================================================================== */
+.chip-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--surface);
+}
+/* The label right after a checked radio becomes the "selected" chip */
+.chip-radio:checked + .chip {
+  color: #fff;
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
+}
+.chip-radio:focus-visible + .chip {
+  outline: 2px solid var(--brand-strong);
+  outline-offset: 2px;
+}
+
+.day-panel,
+.event-list {
+  flex-basis: 100%;          /* drop onto its own line below the chips */
+  margin-top: 8px;
+}
+
+.day-panel { display: none; gap: 10px; }
+#day-regular:checked ~ .day-regular,
+#day-wed:checked     ~ .day-wed { display: grid; }
+
+.period {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+}
+.period-time { flex: none; width: 74px; }
+.period-time strong { display: block; font-size: 14px; font-weight: 800; }
+.period-time span   { font-size: 13px; color: var(--text-muted); }
+
+.period-bar {
+  flex: none;
+  width: 4px;
+  height: 40px;
+  border-radius: 4px;
+  background: var(--border);
+}
+.period-info { flex: 1; min-width: 0; }
+.period-info h3 { font-size: 16px; font-weight: 800; }
+.period-info p  { font-size: 14px; color: var(--text-muted); }
+
+/* Lunch / nutrition break */
+.period-break { background: var(--surface-2); }
+.period-break h3 { color: var(--text-muted); }
+
+/* The class happening right now (add class="is-now" by hand for now) */
+.period.is-now { background: var(--brand-soft); border-color: transparent; }
+.period.is-now .period-bar { background: var(--brand-strong); }
+
+.now-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--brand-strong);
+}
+
+
+/* =====================================================================
+   9. EVENTS SCREEN
+   Filter chips use the same radio trick. The list hides every event
+   whose data-cat does NOT match the chosen chip:
+
+     #f-sports:checked ~ .event-list .event:not([data-cat="sports"])
+        -> "if Sports chip is checked, hide events that aren't sports"
+   ===================================================================== */
+#f-sports:checked    ~ .event-list .event:not([data-cat="sports"]),
+#f-academics:checked ~ .event-list .event:not([data-cat="academics"]),
+#f-clubs:checked     ~ .event-list .event:not([data-cat="clubs"]),
+#f-arts:checked      ~ .event-list .event:not([data-cat="arts"]),
+#f-community:checked ~ .event-list .event:not([data-cat="community"]) {
+  display: none;
+}
+
+.event-list { display: grid; gap: 10px; }
+
+.event-main { flex: 1; min-width: 0; }
+.event-main h3 { margin-top: 8px; font-size: 16px; font-weight: 800; }
+.event-main p  { margin-top: 4px; font-size: 14px; color: var(--text-muted); }
+
+/* Paragraph revealed when the card is opened.
+   82px left padding lines it up under the title (badge 54 + gap 14 + 14). */
+.event-desc {
+  padding: 0 16px 16px 82px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+
+/* =====================================================================
+   10. NEWS SCREEN
+   ===================================================================== */
+.news-card summary { flex-direction: column; gap: 0; }
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.news-meta time { font-size: 14px; color: var(--text-muted); }
+
+.news-card h3 {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.news-card .summary-text { margin-top: 6px; color: var(--text-muted); }
+
+.news-body { padding: 0 14px 18px; line-height: 1.55; }
+.news-body p + p { margin-top: 12px; }
+
+
+/* =====================================================================
+   11. CAMPUS MAP SCREEN
+   The map is a box (.map). Each building is a <label> placed with
+   percentages. The numbers live in the HTML as inline CSS variables:
+
+        style="--x:6%; --y:6%; --w:36%; --h:20%"
+        (left edge, top edge, width, height — as % of the map)
+
+   Tapping a building checks its hidden radio. The description card
+   (.tile-info) comes right after the label in the HTML, so one rule
+   shows it:   .b-radio:checked + .tile + .tile-info { display: block }
+   ===================================================================== */
+.map {
+  position: relative;
+  aspect-ratio: 9 / 10;
+  margin-bottom: 130px;      /* room for the description card below the map */
+  border-radius: 20px;
+  background: var(--map-ground);
+}
+
+.tile {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: #fff;
+  background: var(--brand-strong);
+}
+/* Light tiles need dark text */
+.tile-field   { color: var(--pal-black); background: var(--map-field); }
+.tile-parking { color: var(--pal-black); background: var(--map-parking); }
+
+/* Selected building turns tan with a black outline */
+.b-radio:checked + .tile {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--pal-black);
+}
+.b-radio:focus-visible + .tile { outline: 3px solid var(--brand-strong); outline-offset: 2px; }
+
+/* The description card under the map (hidden until its building is picked) */
+.tile-info {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: none;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.tile-info strong { display: block; margin-bottom: 4px; font-size: 18px; font-weight: 800; }
+.tile-info span   { color: var(--text-muted); line-height: 1.45; }
+
+.b-radio:checked + .tile + .tile-info { display: block; }
+
+/* Hint text shown while nothing is selected (the cards above cover it) */
+.map::after {
+  content: "Tap a building to see what's inside.";
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  right: 0;
+  padding: 14px 16px;
+  color: var(--text-muted);
+}
+
+
+/* =====================================================================
+   12. DIRECTORY, RESOURCES, MORE
+   Mostly built from the shared .list-group / .list-row pieces in
+   section 5. Only the toggle switch is new.
+   ===================================================================== */
+
+/* Toggle switch: a checkbox with its default look removed. */
+.switch {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 28px;
+  margin: 0;
+  border-radius: 14px;
+  background: var(--switch-off);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.switch::after {                       /* the sliding white knob */
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+.switch:checked { background: var(--brand-strong); }
+.switch:checked::after { transform: translateX(18px); }
+.switch:focus-visible { outline: 3px solid var(--brand-strong); outline-offset: 2px; }
+
+.app-footer {
+  margin-top: 28px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+
+/* =====================================================================
+   13. DESKTOP PREVIEW FRAME
+   On a phone the app fills the screen. On a wide screen we show it as
+   a phone-sized card in the middle so it looks right when a teammate
+   opens the file on a laptop.
+   ===================================================================== */
+@media (min-width: 480px) {
+  body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: color-mix(in srgb, var(--pal-silver) 60%, white);
+  }
+  .app {
+    height: min(860px, calc(100dvh - 48px));
+    border-radius: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+}
+@media (min-width: 480px) and (prefers-color-scheme: dark) {
+  body { background: var(--pal-black); }
+}
+
+/* Respect "reduce motion" accessibility setting */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
