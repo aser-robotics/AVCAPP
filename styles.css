@@ -39,7 +39,7 @@
 
   /* ---------- OFFICIAL BRAND PALETTE (from the brand guide) ----------
      Use these exact values. Do not lighten, darken or recolor them. */
-  --pal-maroon: #8C1E41;   /* Pantone (PMS) 208   RGB 140-30-65    */
+  --pal-maroon: #630825;   /* Pantone (PMS) 208   RGB 140-30-65    */
   --pal-black:  #000000;   /* Pantone (PMS) 208 Black              */
   --pal-silver: #D1D3D4;   /* Gray / Silver       RGB 209-211-212  */
   --pal-tan:    #C2B8A3;   /* complementary       RGB 194-184-163  */
@@ -85,13 +85,13 @@
    the official tan. Delete this whole block to turn dark mode off. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --brand-strong: #B33A62;                       /* lifted maroon, white text still passes */
+    --brand-strong: #922e4f;                       /* lifted maroon, white text still passes */
     --brand-text:   var(--pal-tan);
     --brand-soft:   color-mix(in srgb, var(--pal-maroon) 32%, #161617);
     --on-brand-soft:var(--pal-tan);
     --progress-fill:var(--pal-tan);
 
-    --bg:           #0A0A0B;
+    --bg:           #000000;
     --surface:      #161617;
     --surface-2:    #212123;
     --border:       #333336;
