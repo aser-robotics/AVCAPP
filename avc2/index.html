@@ -91,6 +91,7 @@
     <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H4c0 3 1.5 4.5 4 5M16 6h4c0 3-1.5 4.5-4 5M12 13v4M8 21h8M10 17h4"/></symbol>
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.9-8-11a4.5 4.5 0 018-2.7A4.5 4.5 0 0120 9c0 6.1-8 11-8 11z"/></symbol>
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-careers" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></symbol>
   </svg>
 
 
@@ -108,7 +109,8 @@
   <input class="state-radio" type="radio" name="screen" id="screen-map" aria-label="Campus map">
   <input class="state-radio" type="radio" name="screen" id="screen-directory" aria-label="Staff directory">
   <input class="state-radio" type="radio" name="screen" id="screen-resources" aria-label="Resources">
-
+  <input class="state-radio" type="radio" name="screen" id="screen-careers" aria-label="Careers">
+<input class="state-radio" type="radio" name="screen" id="screen-apply" aria-label="Job application">
 
   <div class="app">
     <div class="screens">
@@ -541,7 +543,7 @@
             </details>
 
             <details class="card news-card">
-              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
+              <summary><img class="cover" src="pexels-cottonbro-7568427.jpg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="clubs">Clubs</span>
                   <time datetime="2026-10-14">Oct 14</time>
@@ -556,7 +558,7 @@
             </details>
 
             <details class="card news-card">
-              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
+              <summary><img class="cover" src="jason-leung-xmeRBPunJR8-unsplash.jpg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="academics">Academics</span>
                   <time datetime="2026-10-13">Oct 13</time>
@@ -928,7 +930,74 @@
         </div>
       </section>
 
-      <!-- ADD-ON SCREENS: paste these inside <div class="screens"> after the Resources screen -->
+
+      <!-- SCREEN: CAREERS -->
+      <section class="screen" id="careers" aria-label="Careers">
+        <header class="app-bar"><h1>Careers</h1></header>
+        <div class="screen-body">
+
+        <img class="careers-banner" src="CareerCenter.jpg" alt="Students at Antelope Valley College">
+          <h2 class="group-label">Join the team</h2>
+          <p class="careers-intro">Placeholder: a short welcome about working at Antelope Valley College.</p>
+
+          <h2 class="group-label">Open positions</h2>
+          <div class="card list-group">
+            <label class="list-row" for="screen-apply">
+              <span class="row-text"><strong>Job Title Placeholder</strong><span>Department · Full-time · Location TBD</span></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="list-row" for="screen-apply">
+              <span class="row-text"><strong>Job Title Placeholder</strong><span>Department · Part-time · Location TBD</span></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+            <label class="list-row" for="screen-apply">
+              <span class="row-text"><strong>Job Title Placeholder</strong><span>Department · Student worker · Location TBD</span></span>
+              <svg class="icon row-end"><use href="#i-chevron"/></svg>
+            </label>
+          </div>
+
+          <label class="cta-btn" for="screen-apply">Start an application</label>
+        </div>
+      </section>
+
+      <!-- SCREEN: JOB APPLICATION FORM -->
+      <section class="screen" id="apply" aria-label="Job application">
+        <header class="app-bar">
+          <label class="back-btn" for="screen-careers" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label>
+          <h1>Apply</h1>
+        </header>
+        <div class="screen-body">
+          <!-- Put your own form handler URL in action="" when you are ready -->
+          <form class="job-form" action="YOUR-FORM-URL-HERE" method="post" enctype="multipart/form-data">
+            <label>Full name
+              <input type="text" name="name" required autocomplete="name" placeholder="Your name">
+            </label>
+            <label>Email
+              <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+            </label>
+            <label>Phone
+              <input type="tel" name="phone" autocomplete="tel" placeholder="(555) 555-5555">
+            </label>
+            <label>Position
+              <select name="position" required>
+                <option value="">Choose a position</option>
+                <option>Job Title Placeholder</option>
+                <option>Another Position Placeholder</option>
+                <option>General Application</option>
+              </select>
+            </label>
+            <label>Resume
+              <input type="file" name="resume" accept=".pdf,.doc,.docx">
+            </label>
+            <label>Why do you want to work here?
+              <textarea name="message" rows="5" placeholder="Tell us a little about yourself"></textarea>
+            </label>
+            <button class="cta-btn" type="submit">Submit application</button>
+          </form>
+        </div>
+      </section>
+
+
 
       <section class="screen" id="explore" aria-label="Explore">
         <header class="app-bar"><label class="back-btn" for="screen-more" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Explore</h1></header>
@@ -1024,6 +1093,7 @@
       </section>
 
 
+
     </div><!-- /.screens -->
 
     
@@ -1047,6 +1117,9 @@
       </label>
       <label class="nav-item nav-news" for="screen-news">
         <svg class="icon"><use href="#i-news"/></svg><span>News</span>
+      </label>
+      <label class="nav-item nav-careers" for="screen-careers">
+        <svg class="icon"><use href="#i-careers"/></svg><span>Careers</span>
       </label>
       <label class="nav-item nav-more" for="screen-more">
         <svg class="icon"><use href="#i-grid"/></svg><span>More</span>

@@ -952,3 +952,26 @@ details.card:has(> summary > .cover) > summary { padding-top: 0; row-gap: 12px; 
 .sos .icon { width:28px; height:28px; } .sos span { display:block; font-size:14px; opacity:.9; }
 .chips-wrap { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
 .screen-body > * + .ph-img { margin-top: 14px; }
+/* ===== CAREERS ADD-ON ===== */
+#screen-careers:checked ~ .app #careers,
+#screen-apply:checked   ~ .app #apply { display: block; }
+
+/* highlight the Careers tab on both new screens */
+#screen-careers:checked ~ .app .nav-careers,
+#screen-apply:checked   ~ .app .nav-careers { color: var(--brand-text); }
+
+/* 6 tabs instead of 5 (original was repeat(5, 1fr)) */
+.bottom-nav { grid-template-columns: repeat(6, 1fr); gap: 0; }
+.bottom-nav .nav-item span { font-size: 11px; }
+.careers-banner { display:block; width:100%; height:190px; object-fit:cover; border-radius:var(--radius); }
+
+.cta-btn { display:block; width:100%; margin-top:18px; padding:15px; border:0; border-radius:99px; text-align:center; cursor:pointer;
+  background: var(--brand-strong); color:#fff; font: 500 16px var(--font-head); box-shadow: 0 8px 20px rgba(140,28,64,.28); }
+
+.job-form { display:grid; gap:14px; }
+.job-form label { display:grid; gap:6px; font: 500 14px var(--font-head); }
+.job-form input, .job-form select, .job-form textarea {
+  width:100%; padding:13px 14px; border-radius:14px; border:1px solid var(--border);
+  background: var(--surface); color: var(--text); font: 300 16px var(--font-body); }
+.job-form input:focus, .job-form select:focus, .job-form textarea:focus { outline:3px solid #f18a20; outline-offset:1px; }
+.job-form input[type="file"] { padding:10px; }
