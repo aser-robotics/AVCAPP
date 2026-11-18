@@ -1,0 +1,10 @@
+<!-- ADD-ON RADIOS: paste with the other .state-radio inputs, BEFORE <div class="app"> -->
+<input class="state-radio" type="radio" name="screen" id="screen-explore" aria-label="explore">
+<input class="state-radio" type="radio" name="screen" id="screen-admissions" aria-label="admissions">
+<input class="state-radio" type="radio" name="screen" id="screen-finaid" aria-label="finaid">
+<input class="state-radio" type="radio" name="screen" id="screen-calendar" aria-label="calendar">
+<input class="state-radio" type="radio" name="screen" id="screen-athletics" aria-label="athletics">
+<input class="state-radio" type="radio" name="screen" id="screen-services" aria-label="services">
+<input class="state-radio" type="radio" name="screen" id="screen-safety" aria-label="safety">
+<input class="state-radio" type="radio" name="screen" id="screen-life" aria-label="life">
+<input class="state-radio" type="radio" name="screen" id="screen-library" aria-label="library">

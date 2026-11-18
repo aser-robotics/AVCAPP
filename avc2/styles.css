@@ -1,5 +1,5 @@
 /* =====================================================================
-   styles.css  —  Westview High School app (HTML + CSS only, no JavaScript)
+   styles.css  —  AVC app
    Colors and fonts follow the district brand guide (PMS 208 maroon,
    black, silver + complementary tan / sky / lime; Times New Roman body,
    Helvetica Neue / Arial headlines).
@@ -35,47 +35,49 @@
    Every color/size used below comes from these variables, so changing
    a value here changes it everywhere in the app.
    ===================================================================== */
+@font-face{font-family:"Gotham";font-weight:300;src:local("Gotham Light"),local("Gotham-Light"),url("assets/fonts/Gotham-Light.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Gotham";font-weight:500 900;src:local("Gotham Medium"),local("Gotham-Medium"),url("assets/fonts/Gotham-Medium.woff2") format("woff2");font-display:swap}
 :root {
 
   /* ---------- OFFICIAL BRAND PALETTE (from the brand guide) ----------
      Use these exact values. Do not lighten, darken or recolor them. */
-  --pal-maroon: #630825;   /* Pantone (PMS) 208   RGB 140-30-65    */
-  --pal-black:  #000000;   /* Pantone (PMS) 208 Black              */
-  --pal-silver: #D1D3D4;   /* Gray / Silver       RGB 209-211-212  */
-  --pal-tan:    #C2B8A3;   /* complementary       RGB 194-184-163  */
-  --pal-sky:    #A2BBDE;   /* complementary       RGB 162-187-222  */
-  --pal-lime:   #C6D083;   /* complementary       RGB 198-208-131  */
+  --pal-maroon: #8b1c40;   /* AVC Maroon */
+  --pal-black:  #241d19;   /* warm near-black text (brown family) */
+  --pal-silver: #a79b93;   /* AVC Gray   */
+  --pal-tan:    #f18a20;   /* AVC Poppy  (used as --accent) */
+  --pal-sky:    #8db9ca;   /* AVC Blue   */
+  --pal-lime:   #006b67;   /* AVC Green  */
+  --pal-brown:  #604b3c;   /* AVC Brown  */
 
   /* ---------- Semantic colors (what the app actually uses) ---------- */
   --brand:        var(--pal-maroon);   /* header, tiles, main color         */
   --brand-strong: var(--pal-maroon);   /* active chips, progress, switches  */
   --brand-text:   var(--pal-maroon);   /* maroon text on a plain background */
-  --brand-soft:   color-mix(in srgb, var(--pal-tan) 24%, white); /* pale tint: icon circles, date badges */
+  --brand-soft:   color-mix(in srgb, var(--pal-maroon) 8%, white); /* pale tint: icon circles, date badges */
   --on-brand-soft:var(--pal-maroon);   /* text/icons sitting on --brand-soft */
   --progress-fill:var(--pal-maroon);   /* "Next up" progress bar            */
   --accent:       var(--pal-tan);      /* logo square, selected map tile    */
-  --on-accent:    var(--pal-black);    /* text on top of --accent           */
+  --on-accent:    #241d19;    /* text on top of --accent           */
 
   /* Neutrals (built from the official silver + black) */
-  --bg:           color-mix(in srgb, var(--pal-silver) 22%, white);  /* page background */
+  --bg:           #faf6f2;  /* page background */
   --surface:      #FFFFFF;                                           /* cards           */
-  --surface-2:    color-mix(in srgb, var(--pal-silver) 45%, white);  /* quieter surface */
-  --border:       var(--pal-silver);
+  --surface-2:    #f1e9e2;  /* quieter surface */
+  --border:       #e8dfd8;
   --text:         var(--pal-black);
   --text-muted:   color-mix(in srgb, var(--pal-black) 68%, white);   /* secondary text  */
   --switch-off:   color-mix(in srgb, var(--pal-silver) 80%, black);  /* toggle, off     */
 
   /* Campus map colors */
   --map-ground:   color-mix(in srgb, var(--pal-sky) 30%, white);     /* map background  */
-  --map-field:    var(--pal-lime);                                   /* stadium         */
+  --map-field:    color-mix(in srgb, var(--pal-lime) 35%, white);                                   /* stadium         */
   --map-parking:  var(--pal-silver);                                 /* parking lot     */
 
   /* Shape + type
-     Brand rule: Times New Roman for body copy, Helvetica Neue / Arial for
-     headlines. No more than two typefaces. */
+     Brand rule: Gotham Light for body, Gotham Medium for headlines (Arial fallback). No more than two typefaces. */
   --radius:       16px;
-  --font-body: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
-  --font-head: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --font-body: "Gotham", Arial, "Liberation Sans", sans-serif;
+  --font-head: "Gotham", Arial, "Liberation Sans", sans-serif;
 }
 
 /* Dark mode: same variable names, different values.
@@ -84,14 +86,14 @@
    "text" and "strong" roles use a lighter maroon and the text accents use
    the official tan. Delete this whole block to turn dark mode off. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --brand-strong: #922e4f;                       /* lifted maroon, white text still passes */
-    --brand-text:   var(--pal-tan);
+  :root:not([data-theme="light"]) {
+    --brand-strong: #B33A62;                       /* lifted maroon, white text still passes */
+    --brand-text:   #f5a64f;
     --brand-soft:   color-mix(in srgb, var(--pal-maroon) 32%, #161617);
-    --on-brand-soft:var(--pal-tan);
-    --progress-fill:var(--pal-tan);
+    --on-brand-soft:#f5a64f;
+    --progress-fill:#f18a20;
 
-    --bg:           #000000;
+    --bg:           #0A0A0B;
     --surface:      #161617;
     --surface-2:    #212123;
     --border:       #333336;
@@ -101,6 +103,23 @@
 
     --map-ground:   color-mix(in srgb, var(--pal-sky) 14%, #0A0A0B);
   }
+}
+:root[data-theme="dark"] {
+    --brand-strong: #B33A62;                       /* lifted maroon, white text still passes */
+    --brand-text:   #f5a64f;
+    --brand-soft:   color-mix(in srgb, var(--pal-maroon) 32%, #161617);
+    --on-brand-soft:#f5a64f;
+    --progress-fill:#f18a20;
+
+    --bg:           #0A0A0B;
+    --surface:      #161617;
+    --surface-2:    #212123;
+    --border:       #333336;
+    --text:         #F2F2F2;
+    --text-muted:   #A8AAAC;
+    --switch-off:   #4A4A4E;
+
+    --map-ground:   color-mix(in srgb, var(--pal-sky) 14%, #0A0A0B);
 }
 
 
@@ -114,7 +133,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   font-family: var(--font-body);   /* serif: all body copy */
-  font-size: 17px;                 /* Times runs small, so a little larger than usual */
+  font-size: 16px;
   line-height: 1.4;
   color: var(--text);
   background: var(--bg);
@@ -827,3 +846,109 @@ details[open] > summary .chev { transform: rotate(90deg); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
 }
+
+
+/* =====================================================================
+   14. AVC POLISH  (images, depth, motion)  — added on top of sections 1-13
+   ===================================================================== */
+body { font-weight: 300; font-synthesis: none; }
+h1, h2, h3, strong, .tag, .chip, .nav-item { font-weight: 500; }
+
+/* Hero: sunset artwork behind a maroon wash (swap assets/images/hero.svg for a real photo) */
+.hero {
+  position: relative; overflow: hidden; padding-bottom: 36px;
+  background: linear-gradient(180deg, rgba(140,28,64,.78), rgba(110,20,50,.92)), url("assets/images/hero.svg") center/cover, var(--brand);
+}
+.hero::after { content:""; position:absolute; inset:auto -20% -60px auto; width:220px; height:220px; border-radius:50%;
+  background: radial-gradient(circle, rgba(241,138,32,.55), transparent 70%); pointer-events:none; }
+.hero-greeting { letter-spacing: -.01em; }
+.logo-mark { background:#fff; color: var(--pal-maroon); padding: 6px; overflow: hidden; }
+.logo-mark img { width:100%; height:100%; object-fit:contain; }
+
+/* Cards: softer depth + press feedback */
+.card { box-shadow: 0 6px 20px rgba(60,30,20,.08); transition: transform .15s ease, box-shadow .15s ease; }
+.card:active { transform: scale(.985); }
+@media (hover:hover) { .card:hover { box-shadow: 0 10px 26px rgba(60,30,20,.14); } }
+
+/* Cover images on news + event cards */
+.cover { display:block; width:100%; height:132px; object-fit:cover; border-radius: var(--radius) var(--radius) 0 0; }
+details.card > summary { overflow: hidden; }
+details.card:has(> summary > .cover) > summary { padding-top: 0; }
+details.card > summary > .cover { margin: 0 0 12px; }
+.event > summary > .cover { grid-column: 1 / -1; }
+
+/* Poppy accents */
+.tag { box-shadow: inset 0 0 0 1px rgba(36,29,25,.06); }
+.nav-item[aria-current], .state-radio:checked + * { }
+.quick:hover, .tile:hover { transform: translateY(-2px); }
+.quick, .tile { transition: transform .15s ease; }
+
+/* JS extras */
+.avc-search { margin: 0 0 14px; padding: 12px 16px; width: 100%; font: inherit; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 99px; }
+.avc-chip { display:inline-block; margin-top:14px; padding:7px 14px; border-radius:99px; background: var(--pal-tan);
+  color:#241d19; font: 500 13px var(--font-head); }
+.avc-note { margin: 14px 0 0; padding: 12px 14px; border-radius: 14px; font-size: 13px;
+  background: color-mix(in srgb, var(--pal-tan) 18%, var(--surface)); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+[hidden]{display:none!important}
+.event > summary { flex-wrap: wrap; }
+.event > summary > .cover { flex: 0 0 100%; width: 100%; }
+.event > summary > .event-main { flex: 1 1 0; min-width: 0; }
+.logo-mark { font-size: 15px; letter-spacing: .02em; }
+details.card > summary > .cover { margin: 0 -14px 0; width: calc(100% + 28px); flex: 0 0 calc(100% + 28px); }
+details.card:has(> summary > .cover) > summary { padding-top: 0; row-gap: 12px; }
+/* 1. show the new screens */
+#screen-explore:checked ~ .app #explore,
+#screen-admissions:checked ~ .app #admissions,
+#screen-finaid:checked ~ .app #finaid,
+#screen-calendar:checked ~ .app #calendar,
+#screen-athletics:checked ~ .app #athletics,
+#screen-services:checked ~ .app #services,
+#screen-safety:checked ~ .app #safety,
+#screen-life:checked ~ .app #life,
+#screen-library:checked ~ .app #library { display: block; }
+
+/* 2. PLACEHOLDER IMAGE  <div class="ph-img [wide|sq]"> */
+.ph-img { position: relative; display: grid; place-items: center; text-align: center; min-height: 160px; border-radius: var(--radius); overflow: hidden;
+  border: 2px dashed color-mix(in srgb, var(--pal-silver) 80%, transparent); color: #fff;
+  background: radial-gradient(circle at 80% 15%, rgba(241,138,32,.55), transparent 45%), linear-gradient(135deg, var(--pal-maroon), #5d1228 70%); margin-bottom: 4px; }
+.ph-img::before { content:""; position:absolute; inset:0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 14px, transparent 14px 28px); }
+.ph-inner { position: relative; display: grid; gap: 4px; justify-items: center; padding: 16px; }
+.ph-inner .icon { width: 30px; height: 30px; opacity: .9; }
+.ph-inner strong { font-size: 13px; letter-spacing: .12em; }
+.ph-inner span { font-size: 12px; opacity: .8; }
+.ph-img.wide { min-height: 190px; }
+.ph-img.sq { aspect-ratio: 1; min-height: 0; }
+.ph-img.sq .ph-inner span { display: none; }
+.ph-img.sq .ph-inner strong { font-size: 10px; }
+.ph-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }   /* drop an <img> inside to replace */
+
+/* 3. gallery, stats, tiles, steps, faq, timeline, matchup, CTA, SOS */
+.gallery { display:grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.stat-row { display:grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 14px 0 0; }
+.stat { padding: 14px 8px; text-align:center; border-radius: 14px; background: var(--brand-soft); color: var(--on-brand-soft); }
+.stat strong { display:block; font-size: 22px; } .stat span { font-size: 12px; opacity:.85; }
+.tile-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hub-tile { display:flex; flex-direction:column; gap: 18px; justify-content:space-between; min-height: 104px; padding: 14px; border-radius: 18px; cursor:pointer; color:#fff; box-shadow: 0 6px 18px rgba(60,30,20,.12); transition: transform .15s; }
+.hub-tile:hover { transform: translateY(-2px); } .hub-tile .icon { width:28px; height:28px; }
+.t-m { background: var(--pal-maroon); } .t-o { background: var(--pal-tan); color:#241d19; } .t-g { background: var(--pal-lime); } .t-b { background: var(--pal-sky); color:#12303a; }
+.steps { list-style:none; margin:0; padding: 8px 14px; }
+.steps li { display:flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); } .steps li:last-child { border:0; }
+.step-n { flex:none; display:grid; place-items:center; width:32px; height:32px; border-radius:50%; background: var(--pal-tan); color:#241d19; font: 500 15px var(--font-head); }
+.steps p { margin: 2px 0 0; font-size: 14px; color: var(--text-muted); }
+.stack-sm { display:grid; gap: 10px; }
+.faq summary { align-items:center; justify-content:space-between; } .faq summary strong { flex:1; font-size:15px; }
+.timeline { list-style:none; margin:0; padding: 8px 14px; }
+.timeline li { display:flex; gap:14px; align-items:center; padding: 10px 0; border-bottom:1px solid var(--border); } .timeline li:last-child { border:0; }
+.timeline p { margin:2px 0 0; font-size:13px; color: var(--text-muted); }
+.matchup { display:flex; align-items:center; justify-content:space-around; padding: 18px 10px; text-align:center; }
+.team { display:grid; gap:8px; justify-items:center; font-size:14px; }
+.crest { width:56px; height:56px; border-radius:50%; display:grid; place-items:center; background: var(--pal-maroon); color:#fff; font: 500 15px var(--font-head); border: 3px solid var(--pal-tan); }
+.crest.alt { background: var(--pal-sky); color:#12303a; border-color: var(--pal-silver); }
+.vs { display:grid; gap:2px; } .vs span { font: 500 22px var(--font-head); color: var(--brand-text); } .vs small { color: var(--text-muted); }
+.cta { display:flex; align-items:center; justify-content:center; gap:10px; margin-top: 18px; padding: 15px; border-radius: 99px; background: var(--pal-maroon); color:#fff; font: 500 15px var(--font-head); box-shadow: 0 8px 20px rgba(140,28,64,.3); }
+.sos { display:flex; align-items:center; gap:14px; margin-top:14px; padding:16px; border-radius:16px; background:#b3261e; color:#fff; }
+.sos .icon { width:28px; height:28px; } .sos span { display:block; font-size:14px; opacity:.9; }
+.chips-wrap { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+.screen-body > * + .ph-img { margin-top: 14px; }

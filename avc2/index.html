@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#0B3D91">
+  <meta name="theme-color" content="#8b1c40">
   <title>Antelope Valley College</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <!--
   =======================================================================
-  index.html  —  Antelope Valley College app (HTML + CSS only, no JavaScript)
+  index.html  —  Antelope Valley College (AVC) app (HTML + CSS + a small app.js for extras)
   =======================================================================
 
   FILES
@@ -44,7 +44,8 @@
     9. SCREEN: Resources
    10. Bottom navigation
 
-  WHAT TO EAntelope Valley College name ......... search "Antelope Valley College" and replace all
+  WHAT TO EDIT FIRST
+    - School name ......... search "Antelope Valley College (AVC)" and replace all
     - Colors .............. top of styles.css (section 1)
     - Bell schedule ....... SCREEN: Schedule
     - Events / news ....... SCREEN: Events / SCREEN: News (copy a block,
@@ -121,14 +122,14 @@
         <!-- Blue header with logo, greeting and tagline -->
         <header class="hero">
           <div class="hero-brand">
-            <div class="logo-mark" aria-hidden="true">W</div>
+            <div class="logo-mark"><img src="assets/logo/logo.svg" alt="Antelope Valley College logo" onerror="this.replaceWith(document.createTextNode('AVC'))"></div>
             <div>
-              <p class="hero-school">Antelope Valley College</p>
-              <p class="hero-sub">Home of the Eagles</p>
+              <p class="hero-school">Antelope Valley College (AVC)</p>
+              <p class="hero-sub">Home of the Marauders</p>
             </div>
           </div>
           <h1 class="hero-greeting">Welcome back 👋</h1>
-          <p class="hero-tagline">Soar higher.</p>
+          <p class="hero-tagline">Go Marauders!</p>
         </header>
 
         <div class="screen-body">
@@ -186,7 +187,7 @@
               <div class="date-badge"><span>OCT</span><strong>16</strong></div>
               <div class="grow">
                 <h3>Varsity Football vs. Central Hawks</h3>
-                <p>7:00 PM · Eagle Stadium</p>
+                <p>7:00 PM · Stadium (location TBD)</p>
               </div>
               <svg class="icon chev"><use href="#i-chevron"/></svg>
             </label>
@@ -222,7 +223,7 @@
             <label class="card news-teaser" for="screen-news">
               <span class="tag" data-cat="clubs">Clubs</span>
               <h3>Robotics Team Advances to Regionals</h3>
-              <p>The Eagles Robotics squad earned a top-three finish.</p>
+              <p>The Marauders Robotics squad earned a top-three finish.</p>
             </label>
           </div>
 
@@ -402,12 +403,12 @@
             <div class="event-list">
 
               <details class="card event" data-cat="sports">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-athletics.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>16</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="sports">Sports</span>
                     <h3>Varsity Football vs. Central Hawks</h3>
-                    <p>7:00 PM · Eagle Stadium</p>
+                    <p>7:00 PM · Stadium (location TBD)</p>
                   </div>
                   <svg class="icon chev"><use href="#i-chevron"/></svg>
                 </summary>
@@ -415,7 +416,7 @@
               </details>
 
               <details class="card event" data-cat="clubs">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-student-life.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>19</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="clubs">Clubs</span>
@@ -428,7 +429,7 @@
               </details>
 
               <details class="card event" data-cat="arts">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-arts.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>21</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="arts">Arts</span>
@@ -441,7 +442,7 @@
               </details>
 
               <details class="card event" data-cat="academics">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-academics.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>23</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="academics">Academics</span>
@@ -454,7 +455,7 @@
               </details>
 
               <details class="card event" data-cat="community">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-community.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>26</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="community">Community</span>
@@ -467,7 +468,7 @@
               </details>
 
               <details class="card event" data-cat="academics">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-academics.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>29</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="academics">Academics</span>
@@ -480,7 +481,7 @@
               </details>
 
               <details class="card event" data-cat="sports">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-athletics.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>OCT</span><strong>30</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="sports">Sports</span>
@@ -493,7 +494,7 @@
               </details>
 
               <details class="card event" data-cat="community">
-                <summary>
+                <summary><img class="cover" src="assets/images/cover-community.svg" alt="" loading="lazy" onerror="this.remove()">
                   <div class="date-badge"><span>NOV</span><strong>6</strong></div>
                   <div class="event-main">
                     <span class="tag" data-cat="community">Community</span>
@@ -525,7 +526,7 @@
           <div class="stack">
 
             <details class="card news-card">
-              <summary>
+              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="announcement">Announcement</span>
                   <time datetime="2026-10-15">Oct 15</time>
@@ -540,27 +541,27 @@
             </details>
 
             <details class="card news-card">
-              <summary>
+              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="clubs">Clubs</span>
                   <time datetime="2026-10-14">Oct 14</time>
                 </div>
                 <h3>Robotics Team Advances to Regionals</h3>
-                <p class="summary-text">The Eagles Robotics squad earned a top-three finish.</p>
+                <p class="summary-text">The Marauders Robotics squad earned a top-three finish.</p>
               </summary>
               <div class="news-body">
                 <p>After a strong weekend of qualifying matches, the robotics team secured a spot at the regional championship. The team thanks its mentors and the parents who helped with travel and build days.</p>
-                <p>New members are welcome. Meetings are Tuesdays and Thursdays after school in Room 122.</p>
+                <p>New members are welcome. Meetings are Tuesdays and Thursdays after class in Room 122.</p>
               </div>
             </details>
 
             <details class="card news-card">
-              <summary>
+              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="academics">Academics</span>
                   <time datetime="2026-10-13">Oct 13</time>
                 </div>
-                <h3>Library Antelope Valley College Hours</h3>
+                <h3>Library Extends After-School Hours</h3>
                 <p class="summary-text">Quiet study space now open until 5:00 PM on weekdays.</p>
               </summary>
               <div class="news-body">
@@ -569,7 +570,7 @@
             </details>
 
             <details class="card news-card">
-              <summary>
+              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="sports">Sports</span>
                   <time datetime="2026-10-12">Oct 12</time>
@@ -583,7 +584,7 @@
             </details>
 
             <details class="card news-card">
-              <summary>
+              <summary><img class="cover" src="assets/images/cover-campus.svg" alt="" loading="lazy" onerror="this.remove()">
                 <div class="news-meta">
                   <span class="tag" data-cat="announcement">Announcement</span>
                   <time datetime="2026-10-09">Oct 9</time>
@@ -646,29 +647,24 @@
           <div class="card list-group">
             <div class="list-row">
               <span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span>
-              <span class="row-textAntelope Valley College Street</strong><span>Your City, ST 00000</span></span>
+              <span class="row-text"><strong>3041 West Avenue K</strong><span>Lancaster, CA 93536</span></span>
             </div>
-            <a class="list-row" href="tel:5551234567">
+            <a class="list-row" href="tel:+16617226300">
               <span class="icon-circle"><svg class="icon"><use href="#i-phone"/></svg></span>
-              <span class="row-text"><strong>(555) 123-4567</strong><span>Main office</span></span>
+              <span class="row-text"><strong>(661) 722-6300</strong><span>Main campus line</span></span>
             </a>
-            <a class="list-row" href="tel:5551234568">
-              <span class="icon-circle"><svg class="icon"><use href="#i-calendar-x"/></svg></span>
-              <span class="row-text"><strong>(555) 123-4568</strong><span>Attendance line</span></span>
-            </a>
-            <a class="list-row" href="mailto:office@antelopevalleycollege.example.edu">
-              <span class="icon-circle"><svg class="icon"><use href="#i-mail"/></svg></span>
-              <span class="row-text"><strong>office@antelopevalleycollege.example.edu</strong><span>Email the office</span></span>
-            </a>
-            <a class="list-row" href="https://www.example.edu" target="_blank" rel="noopener">
+            <a class="list-row" href="https://www.avc.edu" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-globe"/></svg></span>
-              <span class="row-Antelope Valley College website</strong><span>www.example.edu</span></span>
+              <span class="row-text"><strong>School website</strong><span>www.avc.edu</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
           </div>
 
-          <p class="app-footer">Antelope Valley College · v1.0.0</p>
+          <p class="app-footer">Antelope Valley College · Unofficial student app</p>
         </div>
+        <!-- Paste inside the More screen list so people can reach the new pages -->
+<label class="list-row" for="screen-explore"><span class="icon-circle"><svg class="icon"><use href="#i-grid"/></svg></span><span class="row-text"><strong>Explore AVC</strong><span>Admissions, aid, athletics and more</span></span><svg class="icon row-end"><use href="#i-chevron"/></svg></label>
+
       </section>
 
 
@@ -722,8 +718,8 @@
             <div class="tile-info"><strong>Auditorium</strong><span>Drama, band and choir performances.</span></div>
 
             <input class="b-radio" type="radio" name="building" id="b-field">
-            <label class="tile tile-field" for="b-field" style="--x:70%; --y:48%; --w:24%; --h:38%">Eagle Stadium</label>
-            <div class="tile-info"><strong>Eagle Stadium</strong><span>Football, soccer and track events.</span></div>
+            <label class="tile tile-field" for="b-field" style="--x:70%; --y:48%; --w:24%; --h:38%">Stadium (location TBD)</label>
+            <div class="tile-info"><strong>Stadium (location TBD)</strong><span>Football, soccer and track events.</span></div>
 
             <input class="b-radio" type="radio" name="building" id="b-parking">
             <label class="tile tile-parking" for="b-parking" style="--x:6%; --y:84%; --w:58%; --h:12%">Student Parking</label>
@@ -754,17 +750,17 @@
             <li class="list-row">
               <span class="avatar">DW</span>
               <span class="row-text"><strong>Dana Whitfield</strong><span>Principal · Main Office</span></span>
-              <a class="row-action" href="mailto:dwhitfield@antelopevalleycollege.example.edu" aria-label="Email Dana Whitfield"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:dwhitfield@example.edu" aria-label="Email Dana Whitfield"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
             <li class="list-row">
               <span class="avatar">LO</span>
               <span class="row-text"><strong>Luis Ortega</strong><span>Assistant Principal · Main Office</span></span>
-              <a class="row-action" href="mailto:lortega@antelopevalleycollege.example.edu" aria-label="Email Luis Ortega"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:lortega@example.edu" aria-label="Email Luis Ortega"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
             <li class="list-row">
               <span class="avatar">KM</span>
               <span class="row-text"><strong>Karen Mills</strong><span>Attendance Clerk · Front Desk</span></span>
-              <a class="row-action" href="mailto:kmills@antelopevalleycollege.example.edu" aria-label="Email Karen Mills"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:kmills@example.edu" aria-label="Email Karen Mills"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -773,7 +769,7 @@
             <li class="list-row">
               <span class="avatar">JM</span>
               <span class="row-text"><strong>Jordan Miller</strong><span>PE Teacher &amp; Head Coach · Gym</span></span>
-              <a class="row-action" href="mailto:jmiller@antelopevalleycollege.example.edu" aria-label="Email Jordan Miller"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:jmiller@example.edu" aria-label="Email Jordan Miller"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -782,7 +778,7 @@
             <li class="list-row">
               <span class="avatar">AP</span>
               <span class="row-text"><strong>Anita Patel</strong><span>Computer Science Teacher · Room 122</span></span>
-              <a class="row-action" href="mailto:apatel@antelopevalleycollege.example.edu" aria-label="Email Anita Patel"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:apatel@example.edu" aria-label="Email Anita Patel"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -791,12 +787,12 @@
             <li class="list-row">
               <span class="avatar">PN</span>
               <span class="row-text"><strong>Priya Nair</strong><span>Counselor (A–L) · Room 105</span></span>
-              <a class="row-action" href="mailto:pnair@antelopevalleycollege.example.edu" aria-label="Email Priya Nair"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:pnair@example.edu" aria-label="Email Priya Nair"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
             <li class="list-row">
               <span class="avatar">MB</span>
               <span class="row-text"><strong>Marcus Bell</strong><span>Counselor (M–Z) · Room 106</span></span>
-              <a class="row-action" href="mailto:mbell@antelopevalleycollege.example.edu" aria-label="Email Marcus Bell"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:mbell@example.edu" aria-label="Email Marcus Bell"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -805,7 +801,7 @@
             <li class="list-row">
               <span class="avatar">MA</span>
               <span class="row-text"><strong>Maria Alvarez</strong><span>English Teacher · Room 204</span></span>
-              <a class="row-action" href="mailto:malvarez@antelopevalleycollege.example.edu" aria-label="Email Maria Alvarez"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:malvarez@example.edu" aria-label="Email Maria Alvarez"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -814,7 +810,7 @@
             <li class="list-row">
               <span class="avatar">RD</span>
               <span class="row-text"><strong>Rosa Delgado</strong><span>Librarian · Library</span></span>
-              <a class="row-action" href="mailto:rdelgado@antelopevalleycollege.example.edu" aria-label="Email Rosa Delgado"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:rdelgado@example.edu" aria-label="Email Rosa Delgado"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -823,7 +819,7 @@
             <li class="list-row">
               <span class="avatar">WC</span>
               <span class="row-text"><strong>Wei Chen</strong><span>Math Teacher · Room 118</span></span>
-              <a class="row-action" href="mailto:wchen@antelopevalleycollege.example.edu" aria-label="Email Wei Chen"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:wchen@example.edu" aria-label="Email Wei Chen"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -832,7 +828,7 @@
             <li class="list-row">
               <span class="avatar">AO</span>
               <span class="row-text"><strong>Ada Okafor</strong><span>Biology Teacher · Lab 3</span></span>
-              <a class="row-action" href="mailto:aokafor@antelopevalleycollege.example.edu" aria-label="Email Ada Okafor"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:aokafor@example.edu" aria-label="Email Ada Okafor"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -841,7 +837,7 @@
             <li class="list-row">
               <span class="avatar">SR</span>
               <span class="row-text"><strong>Sam Reyes</strong><span>History Teacher · Room 210</span></span>
-              <a class="row-action" href="mailto:sreyes@antelopevalleycollege.example.edu" aria-label="Email Sam Reyes"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:sreyes@example.edu" aria-label="Email Sam Reyes"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -850,7 +846,7 @@
             <li class="list-row">
               <span class="avatar">ET</span>
               <span class="row-text"><strong>Elena Torres</strong><span>Spanish Teacher · Room 301</span></span>
-              <a class="row-action" href="mailto:etorres@antelopevalleycollege.example.edu" aria-label="Email Elena Torres"><svg class="icon"><use href="#i-mail"/></svg></a>
+              <a class="row-action" href="mailto:etorres@example.edu" aria-label="Email Elena Torres"><svg class="icon"><use href="#i-mail"/></svg></a>
             </li>
           </ul>
 
@@ -874,52 +870,52 @@
 
           <h2 class="group-label">Academics</h2>
           <div class="card list-group">
-            <a class="list-row" href="https://www.example.edu/portal" target="_blank" rel="noopener">
+            <a class="list-row" href="https://my.avc.edu/" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-cap"/></svg></span>
-              <span class="row-text"><strong>Student Portal</strong><span>Grades, attendance and assignments</span></span>
+              <span class="row-text"><strong>Student Portal (myAVC)</strong><span>Registration, grades and records</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
-            <a class="list-row" href="https://www.example.edu/lms" target="_blank" rel="noopener">
+            <a class="list-row" href="https://avc.instructure.com/" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-book"/></svg></span>
-              <span class="row-text"><strong>Learning Management System</strong><span>Course pages and homework</span></span>
+              <span class="row-text"><strong>Canvas</strong><span>Course pages and assignments</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
-            <a class="list-row" href="https://www.example.edu/tutoring" target="_blank" rel="noopener">
+            <a class="list-row" href="https://avc.libguides.com/LibraryHome" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span>
-              <span class="row-text"><strong>Tutoring Schedule</strong><span>Free peer tutoring in the library</span></span>
+              <span class="row-text"><strong>Library &amp; Research</strong><span>Library hub and resources</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
           </div>
 
           <h2 class="group-label">Campus Life</h2>
           <div class="card list-group">
-            <a class="list-row" href="https://www.example.edu/menu" target="_blank" rel="noopener">
+            <a class="list-row" href="https://avc.bncollege.com/" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-utensils"/></svg></span>
-              <span class="row-text"><strong>Lunch Menu</strong><span>This week's breakfast and lunch</span></span>
+              <span class="row-text"><strong>Bookstore</strong><span>Textbooks and supplies</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
-            <a class="list-row" href="https://www.example.edu/clubs" target="_blank" rel="noopener">
+            <a class="list-row" href="https://www.avc.edu/events/week" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-star"/></svg></span>
-              <span class="row-text"><strong>Clubs &amp; Activities</strong><span>Find a club or start your own</span></span>
+              <span class="row-text"><strong>Events Calendar</strong><span>Campus events and activities</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
-            <a class="list-row" href="https://www.example.edu/athletics" target="_blank" rel="noopener">
+            <a class="list-row" href="https://gomarauders.avc.edu/landing/index" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span>
-              <span class="row-text"><strong>Athletics</strong><span>Schedules, rosters and physical forms</span></span>
+              <span class="row-text"><strong>Marauders Athletics</strong><span>Schedules and rosters</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
           </div>
 
           <h2 class="group-label">Support</h2>
           <div class="card list-group">
-            <a class="list-row" href="https://www.example.edu/counseling" target="_blank" rel="noopener">
+            <a class="list-row" href="https://www.avc.edu/students/student-services/osd" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-heart"/></svg></span>
-              <span class="row-text"><strong>Counseling Appointments</strong><span>Book time with your counselor</span></span>
+              <span class="row-text"><strong>Disability Services (OSD)</strong><span>Office for Students with Disabilities</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
-            <a class="list-row" href="https://www.example.edu/absence" target="_blank" rel="noopener">
+            <a class="list-row" href="https://www.avc.edu/financial-aid-scholarships" target="_blank" rel="noopener">
               <span class="icon-circle"><svg class="icon"><use href="#i-calendar-x"/></svg></span>
-              <span class="row-text"><strong>Report an Absence</strong><span>For parents and guardians</span></span>
+              <span class="row-text"><strong>Financial Aid &amp; Scholarships</strong><span>Aid, scholarships and forms</span></span>
               <svg class="icon row-end"><use href="#i-external"/></svg>
             </a>
             <a class="list-row" href="https://www.example.edu/handbook" target="_blank" rel="noopener">
@@ -932,7 +928,105 @@
         </div>
       </section>
 
+      <!-- ADD-ON SCREENS: paste these inside <div class="screens"> after the Resources screen -->
+
+      <section class="screen" id="explore" aria-label="Explore">
+        <header class="app-bar"><label class="back-btn" for="screen-more" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Explore</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>HERO IMAGE GOES HERE</strong><span>Campus photo, 1200×500</span></div></div><h2 class="group-label">Explore AVC</h2><div class="tile-grid"><label class="hub-tile t-m" for="screen-admissions"><svg class="icon"><use href="#i-cap"/></svg><strong>Admissions</strong></label><label class="hub-tile t-o" for="screen-finaid"><svg class="icon"><use href="#i-heart"/></svg><strong>Financial Aid</strong></label><label class="hub-tile t-g" for="screen-calendar"><svg class="icon"><use href="#i-calendar"/></svg><strong>Academic Calendar</strong></label><label class="hub-tile t-b" for="screen-athletics"><svg class="icon"><use href="#i-trophy"/></svg><strong>Athletics</strong></label><label class="hub-tile t-m" for="screen-services"><svg class="icon"><use href="#i-users"/></svg><strong>Student Services</strong></label><label class="hub-tile t-o" for="screen-safety"><svg class="icon"><use href="#i-pin"/></svg><strong>Safety</strong></label><label class="hub-tile t-g" for="screen-life"><svg class="icon"><use href="#i-star"/></svg><strong>Campus Life</strong></label><label class="hub-tile t-b" for="screen-library"><svg class="icon"><use href="#i-book"/></svg><strong>Library</strong></label></div><h2 class="group-label">Latest</h2><div class="ph-img " role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>FEATURE STORY IMAGE</strong><span>Swap for a real photo</span></div></div>
+        </div>
+      </section>
+
+      <section class="screen" id="admissions" aria-label="Admissions">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Admissions</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>ADMISSIONS BANNER</strong><span>Replace with an &lt;img&gt; (suggested 1200×600)</span></div></div><div class="stat-row"><div class="stat"><strong>3</strong><span>steps to apply</span></div><div class="stat"><strong>$0</strong><span>placeholder fee</span></div><div class="stat"><strong>TBD</strong><span>priority date</span></div></div><h2 class="group-label">How to apply</h2><ol class="steps card"><li><span class="step-n">1</span><div><strong>Create your account</strong><p>Placeholder: describe the application account step.</p></div></li><li><span class="step-n">2</span><div><strong>Complete the application</strong><p>Placeholder: what you need on hand.</p></div></li><li><span class="step-n">3</span><div><strong>Activate your student account</strong><p>Placeholder: how to get your student ID and log in.</p></div></li><li><span class="step-n">4</span><div><strong>Register for classes</strong><p>Placeholder: orientation and registration.</p></div></li></ol><h2 class="group-label">Common questions</h2><div class="stack-sm"><details class="card faq"><summary><strong>Do I need to submit transcripts?</strong><svg class="icon chev"><use href="#i-chevron"/></svg></summary><p class="event-desc">Placeholder answer. Replace with the official guidance.</p></details><details class="card faq"><summary><strong>When is the application deadline?</strong><svg class="icon chev"><use href="#i-chevron"/></svg></summary><p class="event-desc">Placeholder answer.</p></details><details class="card faq"><summary><strong>Who do I contact for help?</strong><svg class="icon chev"><use href="#i-chevron"/></svg></summary><p class="event-desc">Placeholder: Admissions & Records, hours TBD.</p></details></div><a class="cta" href="https://www.avc.edu/admissions" target="_blank" rel="noopener">Admissions on avc.edu<svg class="icon"><use href="#i-external"/></svg></a>
+        </div>
+      </section>
+
+      <section class="screen" id="finaid" aria-label="Financial Aid">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Financial Aid</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-heart"/></svg><strong>FINANCIAL AID BANNER</strong><span></span></div></div><h2 class="group-label">Quick links</h2><div class="card list-group">
+<a class="list-row" href="https://www.avc.edu/financial-aid-scholarships" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-coin"/></svg></span><span class="row-text"><strong>Financial Aid &amp; Scholarships</strong><span>Official office page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-file"/></svg></span><span class="row-text"><strong>FAFSA / CADAA checklist</strong><span>Placeholder: add link</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-calendar"/></svg></span><span class="row-text"><strong>Aid deadlines</strong><span>Placeholder: add dates</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-book"/></svg></span><span class="row-text"><strong>Textbook support</strong><span>Placeholder: add details</span></span></div>
+</div><h2 class="group-label">Steps</h2><ol class="steps card"><li><span class="step-n">1</span><div><strong>Apply</strong><p>Placeholder</p></div></li><li><span class="step-n">2</span><div><strong>Verify documents</strong><p>Placeholder</p></div></li><li><span class="step-n">3</span><div><strong>Accept your award</strong><p>Placeholder</p></div></li></ol><h2 class="group-label">FAQ</h2><div class="stack-sm"><details class="card faq"><summary><strong>Am I eligible?</strong><svg class="icon chev"><use href="#i-chevron"/></svg></summary><p class="event-desc">Placeholder answer.</p></details><details class="card faq"><summary><strong>How long does it take?</strong><svg class="icon chev"><use href="#i-chevron"/></svg></summary><p class="event-desc">Placeholder answer.</p></details></div>
+        </div>
+      </section>
+
+      <section class="screen" id="calendar" aria-label="Academic Calendar">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Academic Calendar</h1></header>
+        <div class="screen-body">
+<div class="stat-row"><div class="stat"><strong>TBD</strong><span>term start</span></div><div class="stat"><strong>TBD</strong><span>census</span></div><div class="stat"><strong>TBD</strong><span>finals</span></div></div><h2 class="group-label">Key dates</h2><ul class="timeline card"><li><div class="date-badge"><span>AUG</span><strong>TBD</strong></div><div><strong>Classes begin</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li><li><div class="date-badge"><span>SEP</span><strong>TBD</strong></div><div><strong>Last day to add</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li><li><div class="date-badge"><span>OCT</span><strong>TBD</strong></div><div><strong>Last day to drop</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li><li><div class="date-badge"><span>NOV</span><strong>TBD</strong></div><div><strong>Holiday, no classes</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li><li><div class="date-badge"><span>DEC</span><strong>TBD</strong></div><div><strong>Finals week</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li><li><div class="date-badge"><span>JAN</span><strong>TBD</strong></div><div><strong>Winter intersession</strong><p>Placeholder date. Copy from the official academic calendar.</p></div></li></ul><a class="cta" href="https://www.avc.edu/events/week" target="_blank" rel="noopener">Official academic calendar<svg class="icon"><use href="#i-external"/></svg></a>
+        </div>
+      </section>
+
+      <section class="screen" id="athletics" aria-label="Marauders Athletics">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Marauders Athletics</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-trophy"/></svg><strong>TEAM PHOTO GOES HERE</strong><span>Hero image</span></div></div><h2 class="group-label">Next game</h2><div class="card matchup"><div class="team"><div class="crest">AVC</div><strong>Marauders</strong></div><div class="vs"><span>VS</span><small>Date TBD</small></div><div class="team"><div class="crest alt">?</div><strong>Opponent</strong></div></div><h2 class="group-label">Teams</h2><div class="card list-group">
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span><span class="row-text"><strong>Football</strong><span>Placeholder schedule</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span><span class="row-text"><strong>Basketball</strong><span>Placeholder schedule</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span><span class="row-text"><strong>Soccer</strong><span>Placeholder schedule</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-trophy"/></svg></span><span class="row-text"><strong>Track &amp; Field</strong><span>Placeholder schedule</span></span></div>
+</div><h2 class="group-label">Gallery</h2><div class="gallery"><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 1</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 2</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 3</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 4</strong><span></span></div></div></div><a class="cta" href="https://gomarauders.avc.edu/landing/index" target="_blank" rel="noopener">Marauders Athletics<svg class="icon"><use href="#i-external"/></svg></a>
+        </div>
+      </section>
+
+      <section class="screen" id="services" aria-label="Student Services">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Student Services</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-users"/></svg><strong>STUDENT SUPPORT IMAGE</strong><span></span></div></div><h2 class="group-label">Get help</h2><div class="card list-group">
+<a class="list-row" href="https://www.avc.edu/students/student-services/osd" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-heart"/></svg></span><span class="row-text"><strong>Disability Services (OSD)</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span><span class="row-text"><strong>Counseling</strong><span>Placeholder hours / location</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-book"/></svg></span><span class="row-text"><strong>Tutoring</strong><span>Placeholder hours / location</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-cap"/></svg></span><span class="row-text"><strong>Transfer center</strong><span>Placeholder</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-utensils"/></svg></span><span class="row-text"><strong>Food pantry</strong><span>Placeholder</span></span></div>
+<a class="list-row" href="https://www.avc.edu/its/helpdesk/hours" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-wifi"/></svg></span><span class="row-text"><strong>IT Help Desk</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+</div>
+        </div>
+      </section>
+
+      <section class="screen" id="safety" aria-label="Safety">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Safety</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-pin"/></svg><strong>SAFETY BANNER</strong><span></span></div></div><a class="sos" href="tel:911"><svg class="icon"><use href="#i-phone"/></svg><div><strong>Emergency</strong><span>Call 911</span></div></a><h2 class="group-label">Campus safety</h2><div class="card list-group">
+<a class="list-row" href="https://www.avc.edu/avc-sheriffs-office" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span><span class="row-text"><strong>AVC Sheriff's Office</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-phone"/></svg></span><span class="row-text"><strong>Non-emergency line</strong><span>Placeholder number</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span><span class="row-text"><strong>Safe walk / escort</strong><span>Placeholder</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-mail"/></svg></span><span class="row-text"><strong>Report a concern</strong><span>Placeholder link</span></span></div>
+</div>
+        </div>
+      </section>
+
+      <section class="screen" id="life" aria-label="Campus Life">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Campus Life</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>CAMPUS LIFE IMAGE</strong><span></span></div></div><h2 class="group-label">Clubs &amp; groups</h2><div class="chips-wrap"><span class="chip">Robotics</span><span class="chip">Art Club</span><span class="chip">Student Gov</span><span class="chip">Placeholder</span><span class="chip">Placeholder</span></div><h2 class="group-label">Gallery</h2><div class="gallery"><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 1</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 2</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 3</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 4</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 5</strong><span></span></div></div><div class="ph-img sq" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-star"/></svg><strong>PHOTO 6</strong><span></span></div></div></div><div class="card list-group">
+<a class="list-row" href="https://www.avc.edu/events/week" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-calendar"/></svg></span><span class="row-text"><strong>Events calendar</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+<a class="list-row" href="https://www.avc.edu/news-center" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-news"/></svg></span><span class="row-text"><strong>News center</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+</div>
+        </div>
+      </section>
+
+      <section class="screen" id="library" aria-label="Library">
+        <header class="app-bar"><label class="back-btn" for="screen-explore" aria-label="Back"><svg class="icon"><use href="#i-chevron"/></svg></label><h1>Library</h1></header>
+        <div class="screen-body">
+<div class="ph-img wide" role="img" aria-label="Image placeholder"><div class="ph-inner"><svg class="icon"><use href="#i-book"/></svg><strong>LIBRARY IMAGE</strong><span></span></div></div><div class="stat-row"><div class="stat"><strong>TBD</strong><span>open</span></div><div class="stat"><strong>TBD</strong><span>close</span></div><div class="stat"><strong>TBD</strong><span>study rooms</span></div></div><h2 class="group-label">Library</h2><div class="card list-group">
+<a class="list-row" href="https://avc.libguides.com/LibraryHome" target="_blank" rel="noopener"><span class="icon-circle"><svg class="icon"><use href="#i-book"/></svg></span><span class="row-text"><strong>Library hub</strong><span>Official page</span></span><svg class="icon row-end"><use href="#i-external"/></svg></a>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-search"/></svg></span><span class="row-text"><strong>Search the catalog</strong><span>Placeholder link</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-calendar"/></svg></span><span class="row-text"><strong>Reserve a study room</strong><span>Placeholder link</span></span></div>
+<div class="list-row"><span class="icon-circle"><svg class="icon"><use href="#i-users"/></svg></span><span class="row-text"><strong>Ask a librarian</strong><span>Placeholder</span></span></div>
+</div>
+        </div>
+      </section>
+
+
     </div><!-- /.screens -->
+
+    
 
 
     <!-- ===================================================================
@@ -961,5 +1055,6 @@
 
   </div><!-- /.app -->
 
+  <script src="app.js"></script>
 </body>
 </html>
