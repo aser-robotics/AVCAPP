@@ -857,7 +857,7 @@ h1, h2, h3, strong, .tag, .chip, .nav-item { font-weight: 500; }
 /* Hero: sunset artwork behind a maroon wash (swap assets/images/hero.svg for a real photo) */
 .hero {
   position: relative; overflow: hidden; padding-bottom: 36px;
-  background: linear-gradient(180deg, rgba(140,28,64,.78), rgba(110,20,50,.92)), url("assets/images/hero.svg") center/cover, var(--brand);
+  background: linear-gradient(180deg, rgba(140, 28, 63, 0.199), rgba(110, 20, 50, 0.418)), url("antelope-valley-college_0.png") center/cover, var(--brand);
 }
 .hero::after { content:""; position:absolute; inset:auto -20% -60px auto; width:220px; height:220px; border-radius:50%;
   background: radial-gradient(circle, rgba(241,138,32,.55), transparent 70%); pointer-events:none; }
@@ -871,7 +871,7 @@ h1, h2, h3, strong, .tag, .chip, .nav-item { font-weight: 500; }
 @media (hover:hover) { .card:hover { box-shadow: 0 10px 26px rgba(60,30,20,.14); } }
 
 /* Cover images on news + event cards */
-.cover { display:block; width:100%; height:132px; object-fit:cover; border-radius: var(--radius) var(--radius) 0 0; }
+.cover { display:block; width:100%; height:350px; object-fit:cover; border-radius: var(--radius) var(--radius) 0 0; }
 details.card > summary { overflow: hidden; }
 details.card:has(> summary > .cover) > summary { padding-top: 0; }
 details.card > summary > .cover { margin: 0 0 12px; }
